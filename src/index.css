@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Amazing Sneaker · Expressive Energy / street ── */
+  --color-paper: #faf9f6;
+  --color-ink: #111111;
+  --color-ink-soft: #3d3d3d;
+  --color-ink-mute: #6b6b6b;
+  --color-line: #e5e2db;
+  --color-volt: #d4ff3f;
+  --color-volt-deep: #b8e62e;
+  --color-ember: #ff5a1f;
+  --color-court: #1d4ed8;
+
+  --font-display: "Anton", "Archivo", "Arial Narrow", sans-serif;
+  --font-sans: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Thang spacing 4 / 8 / 16 / 24 / 48 — không số lẻ */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-4: 16px;
+  --spacing-6: 24px;
+  --spacing-12: 48px;
+}
+
+html {
+  background: var(--color-paper);
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-volt);
+  color: var(--color-ink);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-paper);
+}
+::-webkit-scrollbar-thumb {
+  background: #d8d4cb;
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Hiệu ứng 2D (subagent C) — chỉ keyframes/utility, không đổi token ── */
+
+/* Marquee thương hiệu: chạy ngang vô hạn, 2 nửa giống hệt nhau nên -50% là liền mạch. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 22s linear infinite;
+  will-change: transform;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Lenis smooth scroll — class do Lenis tự gắn lên <html>. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* View Transitions cho chuyển trang (document.startViewTransition). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.25s;
+  animation-timing-function: ease-out;
+}
+::view-transition-old(root) {
+  animation-name: vt-fade-out;
+}
+::view-transition-new(root) {
+  animation-name: vt-fade-in;
+}
+@keyframes vt-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Giảm chuyển động: marquee đứng yên, view transition tắt hẳn. */
+  .animate-marquee {
+    animation: none;
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
