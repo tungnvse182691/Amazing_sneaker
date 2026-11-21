@@ -1,7 +1,7 @@
 import type { Product, SizeStock } from "../types";
 
 /**
- * Seed 25 giày — 8 Nike + 8 Adidas + 8 Puma + 1 Vans.
+ * Seed 28 giày — 8 Nike + 8 Adidas + 8 Puma + 4 Vans.
  * Mỗi giày có 1 colorway duy nhất với ẢNH THẬT đã xem bằng mắt và khớp
  * đúng model + đúng màu đó. Không bịa thêm colorway giả.
  * Ảnh: đường dẫn trực tiếp tới CDN chính hãng / nhà bán lẻ
@@ -477,7 +477,7 @@ export const products: Product[] = [
     description:
       "Tấm carbon PWRPLATE + đệm NITRO™ Elite — đôi chạy đua tốc độ, thân đen phối đế trắng, ngầu và nhanh đúng nghĩa.",
   },
-  // ── Vans (1) — Old Skool Black/White VN000D3HY28, ảnh GOAT đã xem bằng
+  // ── Vans (4) — Old Skool Black/White VN000D3HY28, ảnh GOAT đã xem bằng
   // mắt đúng mẫu + đúng màu. Giá theo Vans Việt Nam chính hãng
   // (OLD SKOOL CLASSIC BLACK/WHITE: 1.850.000 ₫, đang giảm còn 1.572.500 ₫).
   {
@@ -496,6 +496,63 @@ export const products: Product[] = [
     description:
       "Đôi giày trượt ván đầu tiên có sọc Sidestripe huyền thoại, ra mắt năm 1977 — thân đen, sọc trắng, đế waffle bám chắc.",
     cutoutImage: "https://files.catbox.moe/hwnvhi.png",
+  },
+  // Sk8-Hi Black/White VN000D5IB8C, ảnh GOAT đã xem bằng mắt đúng mẫu +
+  // đúng màu. Giá theo Vans Việt Nam chính hãng (CLASSIC SK8-HI
+  // BLACK/WHITE: 1.950.000 ₫, đang giảm còn 1.755.000 ₫).
+  {
+    id: "vans-sk8-hi",
+    slug: "vans-sk8-hi",
+    name: "Vans Sk8-Hi",
+    brand: "vans",
+    category: "Lifestyle",
+    price: 1755000,
+    originalPrice: 1950000,
+    colors: [{ name: "Đen / Trắng", hex: "#111111", image: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/012/478/271/original/7572_01.jpg.jpeg?action=crop&width=1500" }],
+    sizes: sizes(),
+    rating: 4.9,
+    sold: 12400,
+    isNew: true,
+    description:
+      "Đôi cổ cao ra mắt năm 1978 với tên gọi Style 38 — thân đen, sọc trắng, cổ đệm ôm mắt cá, biểu tượng trượt ván không đổi theo thời gian.",
+  },
+  // Authentic Black VN000EE3BLK, ảnh GOAT đã xem bằng mắt đúng mẫu +
+  // đúng màu. Giá theo Vans Việt Nam chính hãng (AUTHENTIC CLASSIC
+  // BLACK/BLACK: 1.450.000 ₫ — trang Vans VN chỉ hiện 1 giá này, không có
+  // giá giảm riêng nên không ghi originalPrice).
+  {
+    id: "vans-authentic",
+    slug: "vans-authentic",
+    name: "Vans Authentic",
+    brand: "vans",
+    category: "Lifestyle",
+    price: 1450000,
+    colors: [{ name: "Đen", hex: "#111111", image: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/106/226/078/original/287496_01.jpg.jpeg?action=crop&width=1500" }],
+    sizes: sizes(),
+    rating: 4.8,
+    sold: 15800,
+    isNew: true,
+    description:
+      "Mẫu giày đầu tiên của Vans từ năm 1966 — cổ thấp, vải canvas đen, chỉ trắng nổi, đế waffle nguyên bản.",
+  },
+  // Classic Slip-On Black/White VN000EYEBLK, ảnh GOAT đã xem bằng mắt
+  // đúng mẫu + đúng màu. Giá theo Vans Việt Nam chính hãng (CLASSIC
+  // SLIP-ON BLACK/WHITE: 1.450.000 ₫, đang giảm còn 1.305.000 ₫).
+  {
+    id: "vans-slip-on-classic",
+    slug: "vans-slip-on-classic",
+    name: "Vans Slip-On Classic",
+    brand: "vans",
+    category: "Lifestyle",
+    price: 1305000,
+    originalPrice: 1450000,
+    colors: [{ name: "Đen / Trắng", hex: "#111111", image: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/082/887/413/original/387212_01.jpg.jpeg?action=crop&width=1500" }],
+    sizes: sizes(),
+    rating: 4.9,
+    sold: 14600,
+    isNew: true,
+    description:
+      "Đôi giày lười kinh điển từ năm 1977, không dây buộc — xỏ vào là đi, thân canvas đen, đế waffle bám chắc.",
   },
 ];
 
