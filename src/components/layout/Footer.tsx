@@ -9,7 +9,7 @@ export function Footer() {
             Amazing<span className="bg-volt px-1 text-ink">Sneaker</span>
           </p>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/70">
-            Giày thể thao Nike, Adidas, Puma chính hãng. Chạy bộ, bóng rổ, lifestyle —
+            Giày thể thao Nike, Adidas, Puma, Vans chính hãng. Chạy bộ, bóng rổ, lifestyle —
             đủ size 36–46, giao nhanh toàn quốc.
           </p>
         </div>

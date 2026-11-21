@@ -1,15 +1,18 @@
 import type { Product, SizeStock } from "../types";
 
 /**
- * Seed 24 giày — 8 Nike + 8 Adidas + 8 Puma.
+ * Seed 25 giày — 8 Nike + 8 Adidas + 8 Puma + 1 Vans.
  * Mỗi giày có 1 colorway duy nhất với ẢNH THẬT đã xem bằng mắt và khớp
  * đúng model + đúng màu đó. Không bịa thêm colorway giả.
  * Ảnh: đường dẫn trực tiếp tới CDN chính hãng / nhà bán lẻ
  * (static.nike.com, image.goat.com, assets.adidas.com, images.puma.com,
  * images.novelship.com, image-cdn.hypb.st, cdn.evrysz.net, cdn.afew-store.com),
  * đã kiểm chứng HTTP 200 + xem bằng mắt đúng mẫu + đúng màu từng đôi.
- * Ảnh Jordan 1 tách nền cho hero hộp giày host trên catbox
- * (https://files.catbox.moe/v8eifj.png). Repo không còn file ảnh nào.
+ * Ảnh tách nền cho hero hộp giày (4 đôi) đều host trên catbox:
+ * Jordan 1 https://files.catbox.moe/v8eifj.png,
+ * Air Force 1 https://files.catbox.moe/h1219d.png,
+ * Air Max 90 https://files.catbox.moe/03cwko.png,
+ * Vans Old Skool https://files.catbox.moe/hwnvhi.png.
  */
 
 function sizes(zeroSizes: number[] = []): SizeStock[] {
@@ -62,6 +65,7 @@ export const products: Product[] = [
     isHot: true,
     description:
       "Đôi giày trắng quốc dân — da mềm, đế Air bền bỉ, phối được với mọi outfit từ đi học tới đi chơi.",
+    cutoutImage: "https://files.catbox.moe/h1219d.png",
   },
   {
     id: "nike-air-max-90",
@@ -82,6 +86,7 @@ export const products: Product[] = [
     sold: 15600,
     description:
       "Túi khí Air Max lộ rõ ở gót, phối màu xám navy đỏ cá tính — biểu tượng streetwear từ năm 1990.",
+    cutoutImage: "https://files.catbox.moe/03cwko.png",
   },
   {
     id: "nike-dunk-low",
@@ -472,10 +477,31 @@ export const products: Product[] = [
     description:
       "Tấm carbon PWRPLATE + đệm NITRO™ Elite — đôi chạy đua tốc độ, thân đen phối đế trắng, ngầu và nhanh đúng nghĩa.",
   },
+  // ── Vans (1) — Old Skool Black/White VN000D3HY28, ảnh GOAT đã xem bằng
+  // mắt đúng mẫu + đúng màu. Giá theo Vans Việt Nam chính hãng
+  // (OLD SKOOL CLASSIC BLACK/WHITE: 1.850.000 ₫, đang giảm còn 1.572.500 ₫).
+  {
+    id: "vans-old-skool",
+    slug: "vans-old-skool",
+    name: "Vans Old Skool",
+    brand: "vans",
+    category: "Lifestyle",
+    price: 1572500,
+    originalPrice: 1850000,
+    colors: [{ name: "Đen / Trắng", hex: "#111111", image: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/078/453/995/original/192218_01.jpg.jpeg?action=crop&width=1500" }],
+    sizes: sizes(),
+    rating: 4.9,
+    sold: 18200,
+    isNew: true,
+    description:
+      "Đôi giày trượt ván đầu tiên có sọc Sidestripe huyền thoại, ra mắt năm 1977 — thân đen, sọc trắng, đế waffle bám chắc.",
+    cutoutImage: "https://files.catbox.moe/hwnvhi.png",
+  },
 ];
 
 export const BRAND_LABELS: Record<string, string> = {
   nike: "Nike",
   adidas: "Adidas",
   puma: "Puma",
+  vans: "Vans",
 };

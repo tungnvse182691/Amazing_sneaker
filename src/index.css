@@ -81,6 +81,13 @@ body {
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+/* Dải giày chạy: chậm hơn chữ chạy, hàng dưới chạy ngược chiều. */
+.animate-marquee-slow {
+  animation-duration: 40s;
+}
+.animate-marquee-reverse {
+  animation-direction: reverse;
+}
 
 /* Lenis smooth scroll — class do Lenis tự gắn lên <html>. */
 html.lenis,

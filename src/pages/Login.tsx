@@ -4,6 +4,27 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { loginRequest } from "../lib/adminApi";
 import { useAuthStore } from "../stores/auth";
+import { products } from "../data/products";
+
+/** Mosaic "một đống giày": 12 ảnh thật đã kiểm chứng (4 Nike + 4 Adidas + 4 Puma). */
+const MOSAIC_SLUGS = [
+  "nike-air-jordan-1-retro-high",
+  "adidas-ultraboost-light",
+  "puma-suede-classic",
+  "nike-air-force-1-07",
+  "adidas-samba-og",
+  "puma-rs-x",
+  "nike-air-max-90",
+  "adidas-superstar",
+  "puma-palermo",
+  "nike-dunk-low",
+  "adidas-stan-smith",
+  "puma-cali",
+];
+
+const MOSAIC_PRODUCTS = MOSAIC_SLUGS.map((slug) => products.find((p) => p.slug === slug)).filter(
+  (p): p is NonNullable<typeof p> => p !== undefined,
+);
 
 const loginSchema = z.object({
   email: z.string().trim().email("Email chưa đúng định dạng, ví dụ admin@amazing.vn"),
@@ -60,8 +81,8 @@ export default function Login() {
   };
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-6xl items-center px-6 py-12">
-      <div className="w-full max-w-md rounded-3xl border border-line bg-white p-8 shadow-sm">
+    <main className="mx-auto flex min-h-screen max-w-6xl items-center justify-center gap-10 px-6 py-12 lg:justify-start">
+      <div className="w-full max-w-md shrink-0 rounded-3xl border border-line bg-white p-8 shadow-sm">
         <p className="font-display text-4xl uppercase tracking-wide">
           Amazing<span className="text-ember">.</span> Sneaker
         </p>
@@ -121,6 +142,37 @@ export default function Login() {
           ← Về trang chủ
         </Link>
       </div>
+
+      {/* Panel hình bên phải — mosaic "một đống giày" từ ảnh thật của cửa hàng.
+          Ẩn dưới màn lg để form nằm giữa trên mobile. */}
+      <aside
+        aria-label="Bộ sưu tập giày của cửa hàng"
+        className="relative hidden flex-1 self-stretch overflow-hidden rounded-[2rem] lg:block"
+      >
+        <div className="grid h-full grid-cols-3 gap-3">
+          {MOSAIC_PRODUCTS.map((product, i) => (
+            <div
+              key={product.id}
+              className={`overflow-hidden rounded-2xl bg-[#EFEDE8] ${
+                i % 2 === 0 ? "-rotate-1" : "rotate-1"
+              }`}
+            >
+              <img
+                src={product.colors[0]?.image ?? ""}
+                alt={product.name}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          ))}
+        </div>
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/40 to-transparent p-6 pt-20">
+          <p className="font-display text-2xl uppercase text-white">12 đôi giày nổi bật</p>
+          <p className="mt-1 text-sm text-white/85">
+            Nike · Adidas · Puma — toàn bộ đều có sẵn trong cửa hàng.
+          </p>
+        </div>
+      </aside>
     </main>
   );
 }

@@ -21,7 +21,7 @@ export const EMPTY_FILTERS: ShopFilters = {
 };
 
 const ALL_SIZES = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46];
-const BRANDS: Brand[] = ["nike", "adidas", "puma"];
+const BRANDS: Brand[] = ["nike", "adidas", "puma", "vans"];
 const CATEGORIES: Category[] = ["Chạy bộ", "Bóng rổ", "Lifestyle", "Bóng đá", "Tập luyện"];
 
 function toggle<T>(list: T[], value: T): T[] {

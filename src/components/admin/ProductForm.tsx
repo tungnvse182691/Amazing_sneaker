@@ -9,8 +9,8 @@ import { ModalShell } from "./AdminStates";
 
 const SIZES = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46];
 const CATEGORIES: Category[] = ["Chạy bộ", "Bóng rổ", "Lifestyle", "Bóng đá", "Tập luyện"];
-const BRANDS: Brand[] = ["nike", "adidas", "puma"];
-const BRAND_LABELS: Record<Brand, string> = { nike: "Nike", adidas: "Adidas", puma: "Puma" };
+const BRANDS: Brand[] = ["nike", "adidas", "puma", "vans"];
+const BRAND_LABELS: Record<Brand, string> = { nike: "Nike", adidas: "Adidas", puma: "Puma", vans: "Vans" };
 
 /** Chỉ cho chọn ảnh thật đã có trong public/images (khớp đúng tên giày). */
 const IMAGE_OPTIONS = (() => {
@@ -25,7 +25,7 @@ const IMAGE_OPTIONS = (() => {
 
 const productSchema = z.object({
   name: z.string().trim().min(2, "Tên sản phẩm tối thiểu 2 ký tự"),
-  brand: z.enum(["nike", "adidas", "puma"]),
+  brand: z.enum(["nike", "adidas", "puma", "vans"]),
   category: z.string().min(1, "Chọn danh mục"),
   price: z.number().int("Giá phải là số nguyên").positive("Giá phải lớn hơn 0"),
   originalPrice: z.number().int().positive().optional(),

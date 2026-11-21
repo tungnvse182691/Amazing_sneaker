@@ -24,6 +24,8 @@ const DEFAULT_ITEMS = [
   "Impossible Is Nothing",
   "Puma",
   "Forever Faster",
+  "Vans",
+  "Off The Wall",
 ];
 
 export default function Marquee({ items = DEFAULT_ITEMS, speed = 22, className = "" }: MarqueeProps) {
@@ -34,7 +36,7 @@ export default function Marquee({ items = DEFAULT_ITEMS, speed = 22, className =
   return (
     <div
       role="presentation"
-      aria-label="Các thương hiệu: Nike, Adidas, Puma"
+      aria-label="Các thương hiệu: Nike, Adidas, Puma, Vans"
       className={`overflow-hidden bg-ink py-3 select-none ${className}`}
     >
       <div

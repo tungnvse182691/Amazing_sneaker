@@ -4,18 +4,20 @@ import { ProductGrid, ProductGridEmpty, ProductGridSkeleton } from "../component
 import { BRAND_LABELS } from "../data/products";
 import type { Brand } from "../types";
 
-const VALID_BRANDS: Brand[] = ["nike", "adidas", "puma"];
+const VALID_BRANDS: Brand[] = ["nike", "adidas", "puma", "vans"];
 
 const BRAND_TAGLINE: Record<Brand, string> = {
   nike: "Just Do It — từ sân bóng rổ tới đường chạy, Nike luôn dẫn đầu.",
   adidas: "Impossible Is Nothing — 3 sọc huyền thoại, êm chân mọi hành trình.",
   puma: "Forever Faster — tốc độ, phong cách và chất đường phố đậm đà.",
+  vans: "Off The Wall — sọc Sidestripe huyền thoại từ 1977, chất trượt ván nguyên bản.",
 };
 
 const BRAND_HERO: Record<Brand, string> = {
   nike: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/083/401/929/original/14741_01.jpg.jpeg?action=crop&width=1500",
   adidas: "https://images.novelship.com/product/adidas_ultraboost_light__triple_white__gy9350_0_91845.jpeg?fit=fill&bg=FFFFFF&trim=color&q=75&w=1200&h=1200&pad=80&fm=webp&auto=compress",
   puma: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/399781/01/fnd/IDN/fmt/png",
+  vans: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/078/453/995/original/192218_01.jpg.jpeg?action=crop&width=1500",
 };
 
 export function Brand() {

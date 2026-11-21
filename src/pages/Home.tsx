@@ -6,6 +6,7 @@ import { ProductGrid, ProductGridEmpty, ProductGridSkeleton } from "../component
 import { BRAND_LABELS, products as seedProducts } from "../data/products";
 import ShoeBoxHero from "../components/effects/ShoeBoxHero";
 import Marquee from "../components/effects/Marquee";
+import ShoeMarquee from "../components/effects/ShoeMarquee";
 import ScrollReveal from "../components/effects/ScrollReveal";
 
 function VoucherCard({ code, desc }: { code: string; desc: string }) {
@@ -63,19 +64,30 @@ export function Home() {
   const { data: products, isPending, isError, refetch } = useProducts();
   const hot = (products ?? []).filter((p) => p.isHot);
   const newest = (products ?? []).filter((p) => p.isNew);
-  const heroProduct =
-    (products ?? []).find((p) => p.slug === "nike-air-jordan-1-retro-high") ??
-    seedProducts.find((p) => p.slug === "nike-air-jordan-1-retro-high");
+  const heroSlugs = [
+    "nike-air-jordan-1-retro-high",
+    "nike-air-force-1-07",
+    "nike-air-max-90",
+    "vans-old-skool",
+  ];
+  const heroProducts = heroSlugs
+    .map(
+      (slug) =>
+        (products ?? []).find((p) => p.slug === slug) ??
+        seedProducts.find((p) => p.slug === slug),
+    )
+    .filter((p): p is NonNullable<typeof p> => p !== undefined);
   const brandHero: Record<string, string> = {
     nike: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/083/401/929/original/14741_01.jpg.jpeg?action=crop&width=1500",
     adidas: "https://images.novelship.com/product/adidas_ultraboost_light__triple_white__gy9350_0_91845.jpeg?fit=fill&bg=FFFFFF&trim=color&q=75&w=1200&h=1200&pad=80&fm=webp&auto=compress",
     puma: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/399781/01/fnd/IDN/fmt/png",
+    vans: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/078/453/995/original/192218_01.jpg.jpeg?action=crop&width=1500",
   };
 
   return (
     <main>
-      {/* Hero hộp giày kiểu Moco: ảnh thật Jordan 1 + CSS 3D, nắp mở theo scroll */}
-      {heroProduct ? <ShoeBoxHero product={heroProduct} /> : null}
+      {/* Hero chuỗi 4 hộp giày kiểu Moco: Jordan 1 → Air Force 1 → Air Max 90 → Vans Old Skool */}
+      {heroProducts.length === 4 ? <ShoeBoxHero products={heroProducts} /> : null}
 
       {/* Marquee của C (thay marquee CSS của B) */}
       <Marquee />
@@ -107,8 +119,8 @@ export function Home() {
         {/* Bộ sưu tập theo brand */}
         <ScrollReveal as="section">
           <SectionHead title="Bộ sưu tập theo hãng" sub="Chọn hãng bạn yêu thích." />
-          <div className="grid gap-4 md:grid-cols-3">
-            {(["nike", "adidas", "puma"] as const).map((brand) => (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {(["nike", "adidas", "puma", "vans"] as const).map((brand) => (
               <Link
                 key={brand}
                 to={`/brand/${brand}`}
@@ -179,7 +191,7 @@ export function Home() {
           {[
             { icon: Truck, title: "Giao nhanh toàn quốc", desc: "Miễn phí giao hàng cho đơn từ 1.000.000 ₫." },
             { icon: RefreshCw, title: "Đổi size miễn phí", desc: "Đổi size trong 7 ngày nếu giày chưa qua sử dụng." },
-            { icon: ShieldCheck, title: "Chính hãng 100%", desc: "Giày Nike, Adidas, Puma nhập chính hãng, có hóa đơn." },
+            { icon: ShieldCheck, title: "Chính hãng 100%", desc: "Giày Nike, Adidas, Puma, Vans nhập chính hãng, có hóa đơn." },
           ].map((c) => (
             <div key={c.title} className="flex gap-3 rounded-2xl border border-line bg-white p-4">
               <c.icon className="h-6 w-6 shrink-0 text-ember" />
@@ -191,6 +203,9 @@ export function Home() {
           ))}
         </ScrollReveal>
       </div>
+
+      {/* Dải giày chạy cuối trang — 12 đôi thật, 2 hàng ngược chiều */}
+      <ShoeMarquee />
     </main>
   );
 }

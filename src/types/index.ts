@@ -1,4 +1,4 @@
-export type Brand = "nike" | "adidas" | "puma";
+export type Brand = "nike" | "adidas" | "puma" | "vans";
 
 export type Category = "Chạy bộ" | "Bóng rổ" | "Lifestyle" | "Bóng đá" | "Tập luyện";
 
