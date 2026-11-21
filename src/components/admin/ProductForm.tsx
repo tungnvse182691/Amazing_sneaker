@@ -279,7 +279,7 @@ export function ProductForm({
 
         {formError ? <p className="text-sm text-red-600">{formError}</p> : null}
 
-        <div className="flex justify-end gap-3 pt-2">
+        <div className="sticky bottom-0 -mx-6 -mb-4 flex justify-end gap-3 border-t border-line bg-white px-6 pb-4 pt-3">
           <button
             type="button"
             onClick={onClose}
