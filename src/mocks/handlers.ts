@@ -21,7 +21,7 @@ const orderStore: Order[] = [
       {
         productId: "nike-air-jordan-1-retro-high",
         name: "Nike Air Jordan 1 Retro High",
-        image: "/images/nike-air-jordan-1-retro-high.png",
+        image: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/083/401/929/original/14741_01.jpg.jpeg?action=crop&width=1500",
         size: 42,
         price: 4590000,
         quantity: 1,

@@ -4,8 +4,12 @@ import type { Product, SizeStock } from "../types";
  * Seed 24 giày — 8 Nike + 8 Adidas + 8 Puma.
  * Mỗi giày có 1 colorway duy nhất với ẢNH THẬT đã xem bằng mắt và khớp
  * đúng model + đúng màu đó. Không bịa thêm colorway giả.
- * Ảnh: public/images/<slug>.<ext> — nguồn: ảnh sản phẩm chính hãng
- * (nike.com / adidas.com / puma.com / nhà bán lẻ), đã preflight HEAD.
+ * Ảnh: đường dẫn trực tiếp tới CDN chính hãng / nhà bán lẻ
+ * (static.nike.com, image.goat.com, assets.adidas.com, images.puma.com,
+ * images.novelship.com, image-cdn.hypb.st, cdn.evrysz.net, cdn.afew-store.com),
+ * đã kiểm chứng HTTP 200 + xem bằng mắt đúng mẫu + đúng màu từng đôi.
+ * Ngoại lệ giữ file local (không có link đúng màu): ảnh Deviate Nitro 3 đen
+ * toàn tập và ảnh Jordan 1 tách nền dùng cho hero hộp giày.
  */
 
 function sizes(zeroSizes: number[] = []): SizeStock[] {
@@ -32,7 +36,7 @@ export const products: Product[] = [
       {
         name: "Đỏ Chicago / Trắng",
         hex: "#C8102E",
-        image: "/images/nike-air-jordan-1-retro-high.png",
+        image: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/083/401/929/original/14741_01.jpg.jpeg?action=crop&width=1500",
       },
     ],
     sizes: sizes([36]),
@@ -51,7 +55,7 @@ export const products: Product[] = [
     category: "Lifestyle",
     price: 2890000,
     originalPrice: 3290000,
-    colors: [{ name: "Trắng", hex: "#FFFFFF", image: "/images/nike-air-force-1-07.jpg" }],
+    colors: [{ name: "Trắng", hex: "#FFFFFF", image: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/b7d9211c-26e7-431a-ac24-b0540fb3c00f/AIR+FORCE+1+%2707.png" }],
     sizes: sizes(),
     rating: 4.9,
     sold: 23800,
@@ -70,7 +74,7 @@ export const products: Product[] = [
       {
         name: "Xám / Xanh navy / Đỏ",
         hex: "#8A8D91",
-        image: "/images/nike-air-max-90.webp",
+        image: "https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fimage%2F2025%2F04%2F23%2Fnike-air-max-90-usa-dm0029-117-release-info-000.jpg?w=960",
       },
     ],
     sizes: sizes([46]),
@@ -91,7 +95,7 @@ export const products: Product[] = [
       {
         name: "Trắng / Đen (Panda)",
         hex: "#111111",
-        image: "/images/nike-dunk-low.webp",
+        image: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/b1bcbca4-e853-4df7-b329-5be3c61ee057/NIKE+DUNK+LOW+RETRO.png",
       },
     ],
     sizes: sizes([36, 37]),
@@ -108,7 +112,7 @@ export const products: Product[] = [
     brand: "nike",
     category: "Chạy bộ",
     price: 3990000,
-    colors: [{ name: "Trắng", hex: "#FFFFFF", image: "/images/nike-pegasus-41.webp" }],
+    colors: [{ name: "Trắng", hex: "#FFFFFF", image: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/2caa40d0-6887-4844-9431-5004b0a1e317/AIR+ZOOM+PEGASUS+41.png" }],
     sizes: sizes(),
     rating: 4.8,
     sold: 9200,
@@ -127,7 +131,7 @@ export const products: Product[] = [
       {
         name: "Trắng / Đen",
         hex: "#FFFFFF",
-        image: "/images/nike-blazer-mid-77.webp",
+        image: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/099/439/682/original/502784_01.jpg.jpeg?action=crop&width=1500",
       },
     ],
     sizes: sizes([45]),
@@ -147,7 +151,7 @@ export const products: Product[] = [
       {
         name: "Trắng / Đỏ / Xanh",
         hex: "#FFFFFF",
-        image: "/images/nike-cortez.webp",
+        image: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/db838aa6-9440-4e42-adf5-81b9141aec37/NIKE+CORTEZ.png",
       },
     ],
     sizes: sizes(),
@@ -164,7 +168,7 @@ export const products: Product[] = [
     category: "Lifestyle",
     price: 2990000,
     originalPrice: 3390000,
-    colors: [{ name: "Bạc / Đỏ", hex: "#C0C0C0", image: "/images/nike-p-6000.webp" }],
+    colors: [{ name: "Bạc / Đỏ", hex: "#C0C0C0", image: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/109/997/915/original/1577929_01.jpg.jpeg?action=crop&width=1500" }],
     sizes: sizes([36]),
     rating: 4.6,
     sold: 6800,
@@ -183,7 +187,7 @@ export const products: Product[] = [
     price: 4490000,
     originalPrice: 4990000,
     colors: [
-      { name: "Trắng", hex: "#FFFFFF", image: "/images/adidas-ultraboost-light.png" },
+      { name: "Trắng", hex: "#FFFFFF", image: "https://images.novelship.com/product/adidas_ultraboost_light__triple_white__gy9350_0_91845.jpeg?fit=fill&bg=FFFFFF&trim=color&q=75&w=1200&h=1200&pad=80&fm=webp&auto=compress" },
     ],
     sizes: sizes(),
     rating: 4.8,
@@ -203,7 +207,7 @@ export const products: Product[] = [
       {
         name: "Kem / Đen",
         hex: "#EFE7D8",
-        image: "/images/adidas-samba-og.webp",
+        image: "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/9b983d5bc09a4d4aba39a8bf011869ba_9366/Samba_OG_Shoes_White_B75806_00_plp_standard.jpg",
       },
     ],
     sizes: sizes([46]),
@@ -221,7 +225,7 @@ export const products: Product[] = [
     category: "Lifestyle",
     price: 2590000,
     colors: [
-      { name: "Đen / Trắng", hex: "#111111", image: "/images/adidas-gazelle.webp" },
+      { name: "Đen / Trắng", hex: "#111111", image: "https://assets.adidas.com/images/w_600,f_auto,q_auto/61f87dec481e4512823ea7fb0080ba1a_9366/Gazelle_Shoes_Black_BB5476_01_standard.jpg" },
     ],
     sizes: sizes(),
     rating: 4.8,
@@ -238,7 +242,7 @@ export const products: Product[] = [
     price: 2490000,
     originalPrice: 2890000,
     colors: [
-      { name: "Trắng / Đen", hex: "#FFFFFF", image: "/images/adidas-superstar.jpg" },
+      { name: "Trắng / Đen", hex: "#FFFFFF", image: "https://images.novelship.com/product/adidas_superstar__footwear_white_black__eg4958_0_93492.jpeg?fit=fill&bg=FFFFFF&trim=color&q=75&w=1200&h=1200&pad=80&fm=webp&auto=compress" },
     ],
     sizes: sizes([37]),
     rating: 4.8,
@@ -254,7 +258,7 @@ export const products: Product[] = [
     category: "Lifestyle",
     price: 2390000,
     colors: [
-      { name: "Trắng / Vàng", hex: "#FFFFFF", image: "/images/adidas-stan-smith.jpg" },
+      { name: "Trắng / Vàng", hex: "#FFFFFF", image: "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/40b11a09d36045019070a90300d00b59_9366/-_Stan_Smith_F36575_01_standard.jpg" },
     ],
     sizes: sizes(),
     rating: 4.7,
@@ -270,7 +274,7 @@ export const products: Product[] = [
     category: "Lifestyle",
     price: 2690000,
     colors: [
-      { name: "Be / Đen", hex: "#D9C7A7", image: "/images/adidas-campus-00s.webp" },
+      { name: "Be / Đen", hex: "#D9C7A7", image: "https://cdn.evrysz.net/1000x1000/1/adidas-campus-00s-ih4101-ih4101.png" },
     ],
     sizes: sizes([36, 45]),
     rating: 4.8,
@@ -287,7 +291,7 @@ export const products: Product[] = [
     category: "Bóng rổ",
     price: 2890000,
     colors: [
-      { name: "Trắng / Đen", hex: "#FFFFFF", image: "/images/adidas-forum-low.jpg" },
+      { name: "Trắng / Đen", hex: "#FFFFFF", image: "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/ab5e228c8b4749288d3eacb6001dec33_9366/Forum_Low_Shoes_White_FY7757.jpg" },
     ],
     sizes: sizes(),
     rating: 4.7,
@@ -307,7 +311,7 @@ export const products: Product[] = [
       {
         name: "Đen / Đỏ / Xanh",
         hex: "#111111",
-        image: "/images/adidas-nmd-r1.jpg",
+        image: "https://cdn.afew-store.com/assets/26/266473/1200/adidas-nmdr1-pk-core-black-coreblack-lushred-s16-st-s79168-footwear%20%3E%20sneaker-manufacturers-1.jpg",
       },
     ],
     sizes: sizes([44]),
@@ -327,7 +331,7 @@ export const products: Product[] = [
     price: 1990000,
     originalPrice: 2390000,
     colors: [
-      { name: "Đen / Trắng", hex: "#111111", image: "/images/puma-suede-classic.webp" },
+      { name: "Đen / Trắng", hex: "#111111", image: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/399781/01/fnd/IDN/fmt/png" },
     ],
     sizes: sizes(),
     rating: 4.8,
@@ -344,7 +348,7 @@ export const products: Product[] = [
     category: "Lifestyle",
     price: 2790000,
     colors: [
-      { name: "Trắng / Xám", hex: "#E8E8E8", image: "/images/puma-rs-x.webp" },
+      { name: "Trắng / Xám", hex: "#E8E8E8", image: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/391174/06/fnd/IDN/fmt/png" },
     ],
     sizes: sizes([36]),
     rating: 4.7,
@@ -363,7 +367,7 @@ export const products: Product[] = [
       {
         name: "Kem / Trắng",
         hex: "#EFE6D0",
-        image: "/images/puma-palermo.webp",
+        image: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/396463/11/fnd/IDN/fmt/png",
       },
     ],
     sizes: sizes(),
@@ -382,7 +386,7 @@ export const products: Product[] = [
     price: 2190000,
     originalPrice: 2590000,
     colors: [
-      { name: "Trắng / Đen", hex: "#FFFFFF", image: "/images/puma-cali.jpg" },
+      { name: "Trắng / Đen", hex: "#FFFFFF", image: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/369155/04/fnd/PNA/fmt/png" },
     ],
     sizes: sizes([45, 46]),
     rating: 4.7,
@@ -401,7 +405,7 @@ export const products: Product[] = [
       {
         name: "Đa sắc / Trắng",
         hex: "#F5F0E6",
-        image: "/images/puma-future-rider.jpg",
+        image: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/371149/17/fnd/PNA/fmt/png",
       },
     ],
     sizes: sizes(),
@@ -421,7 +425,7 @@ export const products: Product[] = [
       {
         name: "Xanh biển / Vàng neon",
         hex: "#14586B",
-        image: "/images/puma-velocity-nitro-3.webp",
+        image: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/377749/26/fnd/PNA/fmt/png",
       },
     ],
     sizes: sizes(),
@@ -442,7 +446,7 @@ export const products: Product[] = [
       {
         name: "Trắng / Xám / Vàng neon",
         hex: "#EDEDE8",
-        image: "/images/puma-mb-03.webp",
+        image: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/379235/01/fnd/PNA/fmt/png",
       },
     ],
     sizes: sizes([36, 37]),
@@ -460,13 +464,13 @@ export const products: Product[] = [
     category: "Chạy bộ",
     price: 4190000,
     originalPrice: 4690000,
-    colors: [{ name: "Đen", hex: "#111111", image: "/images/puma-deviate-nitro-3.webp" }],
+    colors: [{ name: "Đen / Trắng", hex: "#111111", image: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/309707/01/fnd/PNA/fmt/png" }],
     sizes: sizes([46]),
     rating: 4.9,
     sold: 5400,
     isNew: true,
     description:
-      "Tấm carbon PWRPLATE + đệm NITRO™ Elite — đôi chạy đua tốc độ, đen toàn tập, ngầu và nhanh đúng nghĩa.",
+      "Tấm carbon PWRPLATE + đệm NITRO™ Elite — đôi chạy đua tốc độ, thân đen phối đế trắng, ngầu và nhanh đúng nghĩa.",
   },
 ];
 

@@ -13,9 +13,9 @@ const BRAND_TAGLINE: Record<Brand, string> = {
 };
 
 const BRAND_HERO: Record<Brand, string> = {
-  nike: "/images/nike-air-jordan-1-retro-high.png",
-  adidas: "/images/adidas-ultraboost-light.png",
-  puma: "/images/puma-suede-classic.webp",
+  nike: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/083/401/929/original/14741_01.jpg.jpeg?action=crop&width=1500",
+  adidas: "https://images.novelship.com/product/adidas_ultraboost_light__triple_white__gy9350_0_91845.jpeg?fit=fill&bg=FFFFFF&trim=color&q=75&w=1200&h=1200&pad=80&fm=webp&auto=compress",
+  puma: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/399781/01/fnd/IDN/fmt/png",
 };
 
 export function Brand() {
