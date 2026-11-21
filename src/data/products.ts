@@ -45,7 +45,7 @@ export const products: Product[] = [
     isHot: true,
     description:
       "Huyền thoại sân bóng rổ với phối màu Chicago đỏ trắng kinh điển, da cao cấp và đệm Air êm chân.",
-    cutoutImage: "/images/nike-air-jordan-1-retro-high-cutout.png",
+    cutoutImage: "https://files.catbox.moe/v8eifj.png",
   },
   {
     id: "nike-air-force-1-07",
