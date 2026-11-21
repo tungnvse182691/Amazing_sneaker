@@ -8,8 +8,8 @@ import type { Product, SizeStock } from "../types";
  * (static.nike.com, image.goat.com, assets.adidas.com, images.puma.com,
  * images.novelship.com, image-cdn.hypb.st, cdn.evrysz.net, cdn.afew-store.com),
  * đã kiểm chứng HTTP 200 + xem bằng mắt đúng mẫu + đúng màu từng đôi.
- * Ngoại lệ giữ file local (không có link đúng màu): ảnh Deviate Nitro 3 đen
- * toàn tập và ảnh Jordan 1 tách nền dùng cho hero hộp giày.
+ * Ảnh Jordan 1 tách nền cho hero hộp giày host trên catbox
+ * (https://files.catbox.moe/v8eifj.png). Repo không còn file ảnh nào.
  */
 
 function sizes(zeroSizes: number[] = []): SizeStock[] {
