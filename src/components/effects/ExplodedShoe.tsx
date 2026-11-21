@@ -44,35 +44,38 @@ const LAYERS: Layer[] = [
 
 /**
  * Dải giày (top/bottom, tỉ lệ 0–1 theo chiều cao ảnh gốc) — đo thật bằng
- * pixel (vùng không phải nền trắng, nới thêm 6% mỗi đầu) từ ảnh màu đầu
- * tiên của từng sản phẩm trong src/data/products.ts, ngày 2026-11-21.
- * Ảnh GOAT khổ ngang (Jordan 1, Blazer, P-6000): giày lấp đầy khung → 0–1.
+ * pixel từ ảnh màu đầu tiên của từng sản phẩm trong src/data/products.ts:
+ * vùng khác màu nền (góc ảnh) hoặc tối, nới thêm 1% mỗi đầu. Đo lại
+ * ngày 2026-11-21 sau khi bản đầu (nới 6%) vẫn để lát "dây giày" trống
+ * quá nửa vì phần đệm trên giày trắng không bắt được. Ảnh GOAT khổ ngang
+ * (Jordan 1, Blazer, P-6000, Vans Old Skool): giày lấp đầy khung → 0–1.
  */
 const SHOE_BAND: Record<string, { top: number; bottom: number }> = {
-  "nike-air-jordan-1-retro-high": { top: 0, bottom: 1 },
-  "nike-air-force-1-07": { top: 0.345, bottom: 0.785 },
-  "nike-air-max-90": { top: 0.177, bottom: 0.833 },
-  "nike-dunk-low": { top: 0.359, bottom: 0.787 },
-  "nike-pegasus-41": { top: 0.37, bottom: 0.786 },
-  "nike-blazer-mid-77": { top: 0, bottom: 1 },
-  "nike-cortez": { top: 0.364, bottom: 0.787 },
-  "nike-p-6000": { top: 0, bottom: 1 },
-  "adidas-ultraboost-light": { top: 0.247, bottom: 0.751 },
-  "adidas-samba-og": { top: 0.589, bottom: 1 },
-  "adidas-gazelle": { top: 0.268, bottom: 0.732 },
-  "adidas-superstar": { top: 0.269, bottom: 0.746 },
-  "adidas-stan-smith": { top: 0.207, bottom: 0.816 },
-  "adidas-campus-00s": { top: 0.324, bottom: 0.863 },
-  "adidas-forum-low": { top: 0.217, bottom: 0.79 },
-  "adidas-nmd-r1": { top: 0.302, bottom: 0.9 },
-  "puma-suede-classic": { top: 0.272, bottom: 0.742 },
-  "puma-rs-x": { top: 0.118, bottom: 0.903 },
-  "puma-palermo": { top: 0.254, bottom: 0.766 },
-  "puma-cali": { top: 0.089, bottom: 0.919 },
-  "puma-future-rider": { top: 0.115, bottom: 0.877 },
-  "puma-velocity-nitro-3": { top: 0.235, bottom: 0.778 },
-  "puma-mb-03": { top: 0.221, bottom: 0.794 },
-  "puma-deviate-nitro-3": { top: 0.244, bottom: 0.772 },
+  "nike-air-jordan-1-retro-high": { top: 0.003, bottom: 0.996 },
+  "nike-air-force-1-07": { top: 0.39, bottom: 0.735 },
+  "nike-air-max-90": { top: 0.221, bottom: 0.783 },
+  "nike-dunk-low": { top: 0.409, bottom: 0.737 },
+  "nike-pegasus-41": { top: 0.42, bottom: 0.736 },
+  "nike-blazer-mid-77": { top: 0.004, bottom: 0.996 },
+  "nike-cortez": { top: 0.414, bottom: 0.737 },
+  "nike-p-6000": { top: 0.013, bottom: 0.987 },
+  "adidas-ultraboost-light": { top: 0.296, bottom: 0.703 },
+  "adidas-samba-og": { top: 0.639, bottom: 0.973 },
+  "adidas-gazelle": { top: 0.318, bottom: 0.682 },
+  "adidas-superstar": { top: 0.301, bottom: 0.699 },
+  "adidas-stan-smith": { top: 0.257, bottom: 0.766 },
+  "adidas-campus-00s": { top: 0.373, bottom: 0.814 },
+  "adidas-forum-low": { top: 0.267, bottom: 0.74 },
+  "adidas-nmd-r1": { top: 0.351, bottom: 0.854 },
+  "puma-suede-classic": { top: 0.322, bottom: 0.694 },
+  "puma-rs-x": { top: 0.168, bottom: 0.858 },
+  "puma-palermo": { top: 0.302, bottom: 0.717 },
+  "puma-cali": { top: 0.139, bottom: 0.87 },
+  "puma-future-rider": { top: 0.164, bottom: 0.828 },
+  "puma-velocity-nitro-3": { top: 0.285, bottom: 0.729 },
+  "puma-mb-03": { top: 0.27, bottom: 0.748 },
+  "puma-deviate-nitro-3": { top: 0.293, bottom: 0.724 },
+  "vans-old-skool": { top: 0.008, bottom: 0.992 },
 };
 
 const DEFAULT_BAND = { top: 0.25, bottom: 0.9 };
@@ -91,6 +94,9 @@ export default function ExplodedShoe({ product, title = "Bung đôi giày ra xem
     [product.slug],
   );
   const bandH = band.bottom - band.top;
+  // Độ tách tỉ lệ với chiều cao dải giày: dải ngắn (vd Samba) thì tách ít
+  // lại để khe hở không nuốt mất lát, dải dài (ảnh GOAT) thì tách mạnh hơn.
+  const shiftScale = Math.min(1.35, Math.max(0.45, bandH / 0.75));
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -111,10 +117,11 @@ export default function ExplodedShoe({ product, title = "Bung đôi giày ra xem
       LAYERS.forEach((layer, i) => {
         const el = layerRefs.current[i];
         const label = labelRefs.current[i];
-        if (el) tl.to(el, { y: layer.shift, duration: 1, ease: "none" }, 0);
+        const shift = layer.shift * shiftScale;
+        if (el) tl.to(el, { y: shift, duration: 1, ease: "none" }, 0);
         // Nhãn đi theo đúng lát của nó (cùng độ dịch), đồng thời hiện dần.
         if (label) {
-          tl.to(label, { y: layer.shift, duration: 1, ease: "none" }, 0);
+          tl.to(label, { y: shift, duration: 1, ease: "none" }, 0);
           tl.fromTo(label, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 0.35);
         }
       });
@@ -132,7 +139,7 @@ export default function ExplodedShoe({ product, title = "Bung đôi giày ra xem
 
       {/* Sân khấu: đúng dải giày trong ảnh (tỉ lệ 1 / chiều cao dải), 4 lát
           chồng khít nhau, tách ra khi cuộn (desktop). */}
-      <div ref={stageRef} className="relative mx-auto mt-8 max-w-3xl">
+      <div ref={stageRef} className="relative mx-auto mt-16 max-w-3xl">
         <div
           className="relative w-full overflow-visible"
           style={{ aspectRatio: `${1 / bandH}` }}
