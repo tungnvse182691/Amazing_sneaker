@@ -1,28 +1,25 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { gsap, registerGsap, prefersReducedMotion } from "../../lib/motion";
 import type { Product } from "../../types";
 
 /**
  * ExplodedShoe — section "bung giày" bằng ẢNH THẬT, không ảnh chế.
  *
- * Cách làm: lấy ĐÚNG 1 ảnh sản phẩm thật (vd Nike Dunk Low Panda),
- * cắt thành 4 lát ngang bằng CSS `clip-path` rồi xếp chồng khít nhau.
- * Khi cuộn tới, GSAP ScrollTrigger (scrub) tách 4 lát ra theo chiều dọc,
- * mỗi lát hiện nhãn tên bộ phận. Ảnh vẫn là ảnh thật duy nhất — không
- * có ảnh chi tiết (đế/thân/dây) riêng nào được verify khớp mẫu nên KHÔNG
- * dùng ảnh ngoài, KHÔNG chế ảnh giả. Nhãn là tên vùng trên cùng 1 tấm ảnh.
+ * Cách làm: lấy ĐÚNG 1 ảnh sản phẩm thật, cắt thành 4 lát ngang bằng CSS
+ * `clip-path` rồi xếp chồng khít nhau. Khi cuộn tới, GSAP ScrollTrigger
+ * (scrub) tách 4 lát ra theo chiều dọc, mỗi lát hiện nhãn tên bộ phận.
  *
- * 4 lát (từ trên xuống): dây giày · thân trên · đế giữa · đế ngoài.
+ * Vấn đề đã sửa (11/2026): ảnh mỗi hãng chụp khác nhau — giày không nằm
+ * giữa khung hình mà lệch lên/xuống (vd Samba OG: giày nằm ở 59–100%
+ * chiều cao ảnh, 2 lát trên trước đây toàn nền trống). Nên mỗi sản phẩm
+ * có 1 "dải giày" (SHOE_BAND) đo thật bằng pixel từ ảnh gốc: sân khấu
+ * chỉ hiển thị đúng dải đó, 4 lát cắt chia đều trong dải, nhãn đi theo
+ * đúng lát của nó (trước đây nhãn đứng yên trong khi lát tách ra).
  *
- * prefers-reduced-motion / mobile hẹp: hiện ảnh tĩnh nguyên vẹn +
- * danh sách nhãn bên dưới, không scrub, không tách lớp (nhẹ, không lag).
+ * 4 lát (từ trên xuống, trong dải giày): dây giày · thân trên · đế giữa · đế ngoài.
  *
- * Props:
- * - `product`: giày cần "bung" (mặc định dùng ảnh Dunk Low Panda khi gắn).
- * - `title`: tiêu đề section.
- *
- * Đặt ở: trang ProductDetail (`/product/:slug`), dưới phần mô tả / trước
- * phần đánh giá — hoặc 1 section giữa trang Home.
+ * prefers-reduced-motion / mobile hẹp: hiện ảnh tĩnh nguyên vẹn (đã cắt
+ * đúng dải giày) + danh sách nhãn bên dưới, không scrub, không tách lớp.
  */
 interface ExplodedShoeProps {
   product: Product;
@@ -32,9 +29,6 @@ interface ExplodedShoeProps {
 interface Layer {
   label: string;
   note: string;
-  /** % từ trên xuống của lát cắt (top, bottom). */
-  top: number;
-  bottom: number;
   /** px tách ra khi scrub hết cỡ (âm = lên trên). */
   shift: number;
   /** Nhãn đặt bên nào trên desktop. */
@@ -42,11 +36,46 @@ interface Layer {
 }
 
 const LAYERS: Layer[] = [
-  { label: "Dây giày", note: "Cố định form, thắt vừa chân", top: 0, bottom: 68, shift: -84, side: "left" },
-  { label: "Thân trên", note: "Da trơn, thoáng và bền", top: 32, bottom: 44, shift: -28, side: "right" },
-  { label: "Đế giữa", note: "Đệm êm, giảm chấn khi bước", top: 56, bottom: 20, shift: 28, side: "left" },
-  { label: "Đế ngoài", note: "Cao su bám đường, chống trượt", top: 80, bottom: 0, shift: 84, side: "right" },
+  { label: "Dây giày", note: "Cố định form, thắt vừa chân", shift: -84, side: "left" },
+  { label: "Thân trên", note: "Da trơn, thoáng và bền", shift: -28, side: "right" },
+  { label: "Đế giữa", note: "Đệm êm, giảm chấn khi bước", shift: 28, side: "left" },
+  { label: "Đế ngoài", note: "Cao su bám đường, chống trượt", shift: 84, side: "right" },
 ];
+
+/**
+ * Dải giày (top/bottom, tỉ lệ 0–1 theo chiều cao ảnh gốc) — đo thật bằng
+ * pixel (vùng không phải nền trắng, nới thêm 6% mỗi đầu) từ ảnh màu đầu
+ * tiên của từng sản phẩm trong src/data/products.ts, ngày 2026-11-21.
+ * Ảnh GOAT khổ ngang (Jordan 1, Blazer, P-6000): giày lấp đầy khung → 0–1.
+ */
+const SHOE_BAND: Record<string, { top: number; bottom: number }> = {
+  "nike-air-jordan-1-retro-high": { top: 0, bottom: 1 },
+  "nike-air-force-1-07": { top: 0.345, bottom: 0.785 },
+  "nike-air-max-90": { top: 0.177, bottom: 0.833 },
+  "nike-dunk-low": { top: 0.359, bottom: 0.787 },
+  "nike-pegasus-41": { top: 0.37, bottom: 0.786 },
+  "nike-blazer-mid-77": { top: 0, bottom: 1 },
+  "nike-cortez": { top: 0.364, bottom: 0.787 },
+  "nike-p-6000": { top: 0, bottom: 1 },
+  "adidas-ultraboost-light": { top: 0.247, bottom: 0.751 },
+  "adidas-samba-og": { top: 0.589, bottom: 1 },
+  "adidas-gazelle": { top: 0.268, bottom: 0.732 },
+  "adidas-superstar": { top: 0.269, bottom: 0.746 },
+  "adidas-stan-smith": { top: 0.207, bottom: 0.816 },
+  "adidas-campus-00s": { top: 0.324, bottom: 0.863 },
+  "adidas-forum-low": { top: 0.217, bottom: 0.79 },
+  "adidas-nmd-r1": { top: 0.302, bottom: 0.9 },
+  "puma-suede-classic": { top: 0.272, bottom: 0.742 },
+  "puma-rs-x": { top: 0.118, bottom: 0.903 },
+  "puma-palermo": { top: 0.254, bottom: 0.766 },
+  "puma-cali": { top: 0.089, bottom: 0.919 },
+  "puma-future-rider": { top: 0.115, bottom: 0.877 },
+  "puma-velocity-nitro-3": { top: 0.235, bottom: 0.778 },
+  "puma-mb-03": { top: 0.221, bottom: 0.794 },
+  "puma-deviate-nitro-3": { top: 0.244, bottom: 0.772 },
+};
+
+const DEFAULT_BAND = { top: 0.25, bottom: 0.9 };
 
 export default function ExplodedShoe({ product, title = "Bung đôi giày ra xem" }: ExplodedShoeProps) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -57,6 +86,11 @@ export default function ExplodedShoe({ product, title = "Bung đôi giày ra xem
 
   const image = product.colors[0]?.image ?? "";
   const colorName = product.colors[0]?.name ?? "";
+  const band = useMemo(
+    () => SHOE_BAND[product.slug] ?? DEFAULT_BAND,
+    [product.slug],
+  );
+  const bandH = band.bottom - band.top;
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -78,7 +112,11 @@ export default function ExplodedShoe({ product, title = "Bung đôi giày ra xem
         const el = layerRefs.current[i];
         const label = labelRefs.current[i];
         if (el) tl.to(el, { y: layer.shift, duration: 1, ease: "none" }, 0);
-        if (label) tl.fromTo(label, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 0.35);
+        // Nhãn đi theo đúng lát của nó (cùng độ dịch), đồng thời hiện dần.
+        if (label) {
+          tl.to(label, { y: layer.shift, duration: 1, ease: "none" }, 0);
+          tl.fromTo(label, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 0.35);
+        }
       });
     }, stage);
     return () => ctx.revert();
@@ -92,36 +130,53 @@ export default function ExplodedShoe({ product, title = "Bung đôi giày ra xem
         lát bằng CSS — không phải ảnh minh họa).
       </p>
 
-      {/* Sân khấu: 4 lát ảnh chồng khít nhau, tách ra khi cuộn (desktop). */}
+      {/* Sân khấu: đúng dải giày trong ảnh (tỉ lệ 1 / chiều cao dải), 4 lát
+          chồng khít nhau, tách ra khi cuộn (desktop). */}
       <div ref={stageRef} className="relative mx-auto mt-8 max-w-3xl">
-        <div className="relative aspect-[4/3] w-full overflow-visible">
-          {LAYERS.map((layer, i) => (
-            <div
-              key={layer.label}
-              ref={(el) => {
-                layerRefs.current[i] = el;
-              }}
-              aria-hidden="true"
-              className="absolute inset-0 will-change-transform"
-            >
-              <img
-                src={image}
-                alt=""
-                loading="lazy"
-                className="h-full w-full rounded-2xl object-cover"
-                style={{ clipPath: `inset(${layer.top}% 0 ${layer.bottom}% 0)` }}
-              />
-            </div>
-          ))}
+        <div
+          className="relative w-full overflow-visible"
+          style={{ aspectRatio: `${1 / bandH}` }}
+        >
+          {LAYERS.map((layer, i) => {
+            // Lát i chiếm 1/4 dải giày, tính theo chiều cao ảnh gốc.
+            const sliceTop = band.top + (i * bandH) / 4;
+            const sliceBottom = band.top + ((i + 1) * bandH) / 4;
+            return (
+              <div
+                key={layer.label}
+                ref={(el) => {
+                  layerRefs.current[i] = el;
+                }}
+                aria-hidden="true"
+                className={`absolute inset-0 overflow-hidden will-change-transform ${
+                  i === 0 ? "rounded-t-2xl" : i === LAYERS.length - 1 ? "rounded-b-2xl" : ""
+                }`}
+              >
+                <img
+                  src={image}
+                  alt=""
+                  loading="lazy"
+                  className="absolute left-0 w-full object-cover"
+                  style={{
+                    // Ảnh vuông hiển thị đúng dải giày: cao = chiều rộng sân khấu,
+                    // đẩy lên trên để đầu dải trùng đầu sân khấu.
+                    height: `${100 / bandH}%`,
+                    top: `${(-band.top / bandH) * 100}%`,
+                    clipPath: `inset(${sliceTop * 100}% 0 ${(1 - sliceBottom) * 100}% 0)`,
+                  }}
+                />
+              </div>
+            );
+          })}
 
-          {/* Nhãn từng lát — desktop: nằm 2 bên sân khấu, hiện dần theo scrub. */}
+          {/* Nhãn từng lát — desktop: nằm 2 bên sân khấu, đi theo lát khi tách. */}
           {LAYERS.map((layer, i) => (
             <div
               key={`label-${layer.label}`}
               ref={(el) => {
                 labelRefs.current[i] = el;
               }}
-              style={{ top: `${layer.top + (100 - layer.top - layer.bottom) / 2}%` }}
+              style={{ top: `${(i + 0.5) * 25}%` }}
               className={`absolute hidden w-44 -translate-y-1/2 md:block ${
                 layer.side === "left" ? "right-full mr-4 text-right" : "left-full ml-4"
               } ${reduced ? "opacity-100" : "opacity-0"}`}
