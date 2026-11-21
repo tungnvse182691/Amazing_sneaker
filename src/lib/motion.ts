@@ -76,6 +76,33 @@ export function initSmoothScroll(): LenisHandle | null {
   registerGsap();
   lenis.on("scroll", ScrollTrigger.update);
 
+  // Thanh cuộn native: Lenis 1.3 bỏ qua scroll native (kể cả kéo thanh cuộn)
+  // trong lúc nó đang easing (isScrolling === "smooth") rồi mỗi frame kéo
+  // trang về targetScroll của nó — nên chộp thanh cuộn đúng lúc đó thì
+  // trang không ăn theo tay, cứ đứng yên rồi giật (lỗi anh Tùng gặp, chỉ
+  // "đôi lúc" vì chỉ xảy ra khi Lenis còn đang chạy đà sau lần lăn trước).
+  // Nghe scroll native: nếu vị trí thật lệch khỏi chỗ Lenis đang animate
+  // quá ngưỡng (ngưỡng theo vận tốc để không nhận nhầm scroll do chính
+  // Lenis tạo ra), hoặc vị trí thật đã vượt qua đích Lenis đang hướng tới,
+  // thì nhường tay người dùng: dừng animation, nhận vị trí hiện tại.
+  const onNativeScroll = () => {
+    if (!lenis.isScrolling) return;
+    const actual = window.scrollY;
+    const animated = lenis.animatedScroll;
+    const target = lenis.targetScroll;
+    const lag =
+      Math.abs(actual - animated) > Math.abs(lenis.velocity) * 2 + 8;
+    const away =
+      Math.abs(actual - target) > Math.abs(animated - target) + 8;
+    const crossed =
+      Math.sign(actual - target) !== Math.sign(animated - target) &&
+      Math.abs(actual - target) > 8;
+    if (lag || away || crossed) {
+      lenis.scrollTo(actual, { immediate: true });
+    }
+  };
+  window.addEventListener("scroll", onNativeScroll, { passive: true });
+
   let rafId = 0;
   const raf = (time: number) => {
     lenis.raf(time);
@@ -87,6 +114,7 @@ export function initSmoothScroll(): LenisHandle | null {
     lenis,
     destroy: () => {
       cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", onNativeScroll);
       lenis.destroy();
       if (activeLenis === lenis) activeLenis = null;
     },

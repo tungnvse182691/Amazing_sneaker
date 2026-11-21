@@ -193,11 +193,18 @@ export default function ShoeBoxHero({ products }: ShoeBoxHeroProps) {
       stageEnterProgress.current = stageEnterProgress.current.map((v) => v / total);
     }, section);
 
-    // Ảnh tải xong layout ổn định thì tính lại vị trí pin.
+    // Ảnh tải xong layout ổn định thì tính lại vị trí pin — gom nhiều ảnh
+    // load cùng lúc thành 1 lần refresh (không refresh thì chiều cao trang
+    // đổi liên tục, thanh cuộn phải nhảy theo).
     const imgs = [...section.querySelectorAll("img")];
-    const refresh = () => ScrollTrigger.refresh();
+    let refreshTimer: number | undefined;
+    const refresh = () => {
+      window.clearTimeout(refreshTimer);
+      refreshTimer = window.setTimeout(() => ScrollTrigger.refresh(), 200);
+    };
     imgs.forEach((img) => img.addEventListener("load", refresh));
     return () => {
+      window.clearTimeout(refreshTimer);
       imgs.forEach((img) => img.removeEventListener("load", refresh));
       tlRef.current = null;
       ctx.revert();
