@@ -79,6 +79,10 @@ const SHOE_BAND: Record<string, { top: number; bottom: number }> = {
   "vans-sk8-hi": { top: 0.011, bottom: 0.992 },
   "vans-authentic": { top: 0.013, bottom: 0.991 },
   "vans-slip-on-classic": { top: 0.014, bottom: 0.98 },
+  "vans-era": { top: 0.021, bottom: 0.973 },
+  "vans-knu-skool": { top: 0.008, bottom: 0.992 },
+  "vans-half-cab": { top: 0.323, bottom: 0.675 },
+  "vans-chukka-low": { top: 0.326, bottom: 0.677 },
 };
 
 const DEFAULT_BAND = { top: 0.25, bottom: 0.9 };

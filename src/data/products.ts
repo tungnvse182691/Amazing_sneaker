@@ -1,12 +1,13 @@
 import type { Product, SizeStock } from "../types";
 
 /**
- * Seed 28 giày — 8 Nike + 8 Adidas + 8 Puma + 4 Vans.
+ * Seed 32 giày — 8 Nike + 8 Adidas + 8 Puma + 8 Vans.
  * Mỗi giày có 1 colorway duy nhất với ẢNH THẬT đã xem bằng mắt và khớp
  * đúng model + đúng màu đó. Không bịa thêm colorway giả.
  * Ảnh: đường dẫn trực tiếp tới CDN chính hãng / nhà bán lẻ
  * (static.nike.com, image.goat.com, assets.adidas.com, images.puma.com,
- * images.novelship.com, image-cdn.hypb.st, cdn.evrysz.net, cdn.afew-store.com),
+ * images.novelship.com, images.stockx.com, image-cdn.hypb.st,
+ * cdn.evrysz.net, cdn.afew-store.com),
  * đã kiểm chứng HTTP 200 + xem bằng mắt đúng mẫu + đúng màu từng đôi.
  * Ảnh tách nền cho hero hộp giày (4 đôi) đều host trên catbox:
  * Jordan 1 https://files.catbox.moe/v8eifj.png,
@@ -477,7 +478,7 @@ export const products: Product[] = [
     description:
       "Tấm carbon PWRPLATE + đệm NITRO™ Elite — đôi chạy đua tốc độ, thân đen phối đế trắng, ngầu và nhanh đúng nghĩa.",
   },
-  // ── Vans (4) — Old Skool Black/White VN000D3HY28, ảnh GOAT đã xem bằng
+  // ── Vans (8) — Old Skool Black/White VN000D3HY28, ảnh GOAT đã xem bằng
   // mắt đúng mẫu + đúng màu. Giá theo Vans Việt Nam chính hãng
   // (OLD SKOOL CLASSIC BLACK/WHITE: 1.850.000 ₫, đang giảm còn 1.572.500 ₫).
   {
@@ -553,6 +554,84 @@ export const products: Product[] = [
     isNew: true,
     description:
       "Đôi giày lười kinh điển từ năm 1977, không dây buộc — xỏ vào là đi, thân canvas đen, đế waffle bám chắc.",
+  },
+  // Era Black/White VN000EWZBLK, ảnh GOAT đã xem bằng mắt đúng mẫu +
+  // đúng màu. Giá theo Vans Việt Nam chính hãng (ERA CLASSIC BLACK:
+  // 1.450.000 ₫, đang giảm còn 1.305.000 ₫).
+  {
+    id: "vans-era",
+    slug: "vans-era",
+    name: "Vans Era",
+    brand: "vans",
+    category: "Lifestyle",
+    price: 1305000,
+    originalPrice: 1450000,
+    colors: [{ name: "Đen / Trắng", hex: "#111111", image: "https://image.goat.com/transform/v1/attachments/product_template_pictures/images/022/956/840/original/VN000EWZBLK.png.png?action=crop&width=1500" }],
+    sizes: sizes(),
+    rating: 4.9,
+    sold: 16900,
+    isNew: true,
+    description:
+      "Mẫu cổ thấp đầu tiên mang logo 'Off the Wall', ra mắt năm 1976 — thân canvas đen, chỉ trắng nổi, đế waffle nguyên bản.",
+  },
+  // Knu Skool Black/True White VN0009QC6BT, ảnh GOAT đã xem bằng mắt
+  // đúng mẫu + đúng màu. Giá theo Vans Việt Nam chính hãng: các phối
+  // màu Knu Skool đều niêm yết 2.400.000 ₫ (bản Black/True White hiện
+  // không có trên trang Vans VN nên lấy đúng giá niêm yết, không ghi giảm).
+  {
+    id: "vans-knu-skool",
+    slug: "vans-knu-skool",
+    name: "Vans Knu Skool",
+    brand: "vans",
+    category: "Lifestyle",
+    price: 2400000,
+    colors: [{ name: "Đen / Trắng", hex: "#111111", image: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/086/427/935/original/1166042_01.jpg.jpeg?action=crop&width=1500" }],
+    sizes: sizes(),
+    rating: 4.9,
+    sold: 9800,
+    isNew: true,
+    description:
+      "Bản phóng to đậm chất cuối thập niên 90 của Old Skool — thân da lộn đen, dây to bản, sọc Sidestripe nổi 3D, cổ đệm dày êm chân.",
+  },
+  // Half Cab Black VN000DZ3BLK, ảnh StockX đã xem bằng mắt đúng mẫu +
+  // đúng màu (trang GOAT không lộ link ảnh). Vans VN không bán mẫu này;
+  // giá theo giá bán lẻ chính thức US$65 (StockX Retail Price cho đúng
+  // SKU) × ~26.000 ₫/USD — cùng tỉ giá các giá Vans VN đang dùng.
+  {
+    id: "vans-half-cab",
+    slug: "vans-half-cab",
+    name: "Vans Half Cab",
+    brand: "vans",
+    category: "Lifestyle",
+    price: 1690000,
+    colors: [{ name: "Đen / Trắng", hex: "#111111", image: "https://images.stockx.com/images/Vans-Half-Cab-Black-White.jpg?fit=fill&bg=FFFFFF&w=1500&h=1000&q=80&dpr=1&trim=color&updated_at=1637831756" }],
+    sizes: sizes(),
+    rating: 4.8,
+    sold: 7400,
+    isNew: true,
+    description:
+      "Huyền thoại trượt ván từ năm 1992, cắt ngắn từ đôi signature của Steve Caballero — cổ lửng, thân canvas đen, miếng vá 'Half Cab' đặc trưng.",
+  },
+  // Chukka Low bản Skate Black Gum VN0A4BX40I4, ảnh StockX đã xem bằng
+  // mắt đúng mẫu + đúng màu. Bản Sidestripe Black/White kinh điển
+  // (VN0A5KQZBA21) không có trên GOAT, ảnh skatedeluxe chụp chéo nên
+  // dùng bản Skate đế gum này cho khớp ảnh chụp ngang như các đôi khác.
+  // Vans VN không bán mẫu này; giá theo giá bán lẻ chính thức US$65
+  // (StockX Retail Price cho đúng SKU) × ~26.000 ₫/USD.
+  {
+    id: "vans-chukka-low",
+    slug: "vans-chukka-low",
+    name: "Vans Chukka Low",
+    brand: "vans",
+    category: "Lifestyle",
+    price: 1690000,
+    colors: [{ name: "Đen / Gum", hex: "#111111", image: "https://images.stockx.com/images/Vans-Chukka-Low-Black-Gum-White.jpg?fit=fill&bg=FFFFFF&w=1500&h=1000&q=80&dpr=1&trim=color&updated_at=1649547532" }],
+    sizes: sizes(),
+    rating: 4.8,
+    sold: 8600,
+    isNew: true,
+    description:
+      "Đôi chukka thấp bản Skate của đội trượt Vans — thân đen, đế gum bám chắc, đệm PopCush êm chân, đi cả ngày vẫn thoải mái.",
   },
 ];
 
