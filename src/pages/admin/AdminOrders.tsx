@@ -12,7 +12,24 @@ import { OrderDetailModal } from "../../components/admin/OrderDetailModal";
 import type { Order, OrderStatus } from "../../types";
 
 const inputCls =
-  "rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-ink";
+  "rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none transition focus:border-ink focus:ring-2 focus:ring-volt/60";
+
+/** Màu của ô trạng thái đơn, theo từng trạng thái (chấm màu + nền nhạt cùng tông). */
+const ORDER_STATUS_PILL: Record<OrderStatus, string> = {
+  cho_xac_nhan: "border-amber-200 bg-amber-100 text-amber-900",
+  dang_chuan_bi: "border-sky-200 bg-sky-100 text-sky-900",
+  dang_giao: "border-volt-deep/60 bg-volt text-ink",
+  da_giao: "border-emerald-200 bg-emerald-100 text-emerald-900",
+  da_huy: "border-red-200 bg-red-100 text-red-800",
+};
+
+const ORDER_STATUS_DOT: Record<OrderStatus, string> = {
+  cho_xac_nhan: "bg-amber-600",
+  dang_chuan_bi: "bg-sky-600",
+  dang_giao: "bg-ink",
+  da_giao: "bg-emerald-600",
+  da_huy: "bg-red-600",
+};
 
 function AdminOrdersInner() {
   const { data: orders, isPending, isError, error, refetch } = useOrders();
@@ -43,10 +60,13 @@ function AdminOrdersInner() {
   };
 
   return (
-    <div className="space-y-4">
-      <h1 className="font-display text-3xl uppercase tracking-wide">
-        Đơn hàng {orders ? `(${orders.length})` : ""}
-      </h1>
+    <div className="space-y-6">
+      <div>
+        <h1 className="font-display text-3xl uppercase tracking-wide">
+          Đơn hàng {orders ? `(${orders.length})` : ""}
+        </h1>
+        <p className="mt-1 text-sm text-ink-mute">Theo dõi và chuyển trạng thái từng đơn hàng.</p>
+      </div>
 
       <div className="flex flex-wrap gap-3">
         <input
@@ -73,7 +93,7 @@ function AdminOrdersInner() {
       </div>
 
       {notice ? (
-        <p role="status" className="rounded-xl bg-volt/40 px-3 py-2 text-sm font-medium">
+        <p role="status" className="rounded-xl border border-volt-deep/50 bg-volt/40 px-3 py-2 text-sm font-medium">
           {notice}
         </p>
       ) : null}
@@ -96,10 +116,10 @@ function AdminOrdersInner() {
           hint="Thử đổi từ khóa hoặc bỏ lọc trạng thái."
         />
       ) : (
-        <div className="overflow-x-auto rounded-2xl border border-line bg-white">
+        <div className="overflow-x-auto rounded-2xl border border-line bg-white shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
           <table className="w-full min-w-[860px] text-left text-sm">
             <thead>
-              <tr className="border-b border-line bg-paper">
+              <tr className="border-b border-line bg-paper text-xs font-semibold uppercase tracking-wide text-ink-mute">
                 <th className="px-4 py-3">Mã đơn</th>
                 <th className="px-4 py-3">Khách hàng</th>
                 <th className="px-4 py-3">Ngày đặt</th>
@@ -110,7 +130,7 @@ function AdminOrdersInner() {
             </thead>
             <tbody>
               {filtered.map((o) => (
-                <tr key={o.id} className="border-b border-line last:border-0">
+                <tr key={o.id} className="border-b border-line transition-colors last:border-0 hover:bg-paper/70">
                   <td className="px-4 py-3 font-semibold">{o.code}</td>
                   <td className="px-4 py-3">
                     <p className="font-medium">{o.customerName}</p>
@@ -119,26 +139,34 @@ function AdminOrdersInner() {
                   <td className="px-4 py-3">{formatDateTime(o.createdAt)}</td>
                   <td className="px-4 py-3 font-semibold">{formatVND(o.total)}</td>
                   <td className="px-4 py-3">
-                    <select
-                      value={o.status}
-                      disabled={updateMutation.isPending}
-                      onChange={(e) => changeStatus(o, e.target.value as OrderStatus)}
-                      aria-label={`Đổi trạng thái đơn ${o.code}`}
-                      className={inputCls}
+                    <span
+                      className={`inline-flex items-center gap-2 rounded-xl border px-2 py-1 ${ORDER_STATUS_PILL[o.status]}`}
                     >
-                      {ORDER_STATUSES.map((s) => (
-                        <option key={s} value={s}>
-                          {ORDER_STATUS_LABELS[s]}
-                        </option>
-                      ))}
-                    </select>
+                      <span
+                        className={`h-2 w-2 shrink-0 rounded-full ${ORDER_STATUS_DOT[o.status]}`}
+                        aria-hidden="true"
+                      />
+                      <select
+                        value={o.status}
+                        disabled={updateMutation.isPending}
+                        onChange={(e) => changeStatus(o, e.target.value as OrderStatus)}
+                        aria-label={`Đổi trạng thái đơn ${o.code}`}
+                        className="cursor-pointer bg-transparent py-1 pr-1 text-sm font-semibold outline-none disabled:opacity-50"
+                      >
+                        {ORDER_STATUSES.map((s) => (
+                          <option key={s} value={s}>
+                            {ORDER_STATUS_LABELS[s]}
+                          </option>
+                        ))}
+                      </select>
+                    </span>
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex justify-end gap-2">
                       <button
                         type="button"
                         onClick={() => setDetail(o)}
-                        className="rounded-full border border-line px-3 py-1 text-xs font-semibold hover:bg-paper"
+                        className="rounded-full border border-line px-3 py-1 text-xs font-semibold transition hover:border-ink/40 hover:bg-paper active:scale-95"
                       >
                         Xem chi tiết
                       </button>
@@ -148,7 +176,9 @@ function AdminOrdersInner() {
                           type="button"
                           disabled={updateMutation.isPending}
                           onClick={() => changeStatus(o, s)}
-                          className="rounded-full bg-ink px-3 py-1 text-xs font-semibold text-paper hover:opacity-90 disabled:opacity-50"
+                          className={`rounded-full px-3 py-1 text-xs font-semibold text-paper transition active:scale-95 disabled:opacity-50 ${
+                            s === "da_huy" ? "bg-red-600 hover:bg-red-700" : "bg-ink hover:bg-ink-soft"
+                          }`}
                         >
                           {s === "da_huy" ? "Hủy đơn" : `→ ${ORDER_STATUS_LABELS[s]}`}
                         </button>

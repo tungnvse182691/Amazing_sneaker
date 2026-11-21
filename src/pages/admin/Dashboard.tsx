@@ -1,8 +1,34 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ORDER_STATUS_LABELS, useAdminProducts, useOrders } from "../../lib/adminApi";
 import { formatCount, formatVND } from "../../lib/format";
 import { StatCard } from "../../components/admin/StatCard";
 import { EmptyState, ErrorState, TableSkeleton } from "../../components/admin/AdminStates";
+
+/** Thanh tiến trình chạy từ 0 tới tỉ lệ thật khi vào trang (mờ dần nếu Reduce Motion). */
+function AnimatedBar({ ratio, className }: { ratio: number; className: string }) {
+  const [width, setWidth] = useState(0);
+  useEffect(() => {
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() =>
+        setWidth(Math.min(100, Math.max(0, ratio * 100))),
+      );
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, [ratio]);
+  return (
+    <div className="mt-1 h-3 overflow-hidden rounded-full bg-paper">
+      <div
+        className={`h-full rounded-full transition-[width] duration-700 ease-out ${className}`}
+        style={{ width: `${width}%` }}
+      />
+    </div>
+  );
+}
 
 function DashboardInner() {
   const productsQuery = useAdminProducts();
@@ -11,7 +37,10 @@ function DashboardInner() {
   if (productsQuery.isPending || ordersQuery.isPending) {
     return (
       <div className="space-y-6">
-        <h1 className="font-display text-3xl uppercase tracking-wide">Tổng quan</h1>
+        <div>
+          <h1 className="font-display text-3xl uppercase tracking-wide">Tổng quan</h1>
+          <p className="mt-1 text-sm text-ink-mute">Số liệu theo đơn hàng và kho hiện tại.</p>
+        </div>
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="h-28 animate-pulse rounded-2xl bg-line/60" />
@@ -29,7 +58,10 @@ function DashboardInner() {
       "Đã có lỗi xảy ra.";
     return (
       <div className="space-y-6">
-        <h1 className="font-display text-3xl uppercase tracking-wide">Tổng quan</h1>
+        <div>
+          <h1 className="font-display text-3xl uppercase tracking-wide">Tổng quan</h1>
+          <p className="mt-1 text-sm text-ink-mute">Số liệu theo đơn hàng và kho hiện tại.</p>
+        </div>
         <ErrorState
           message={message}
           onRetry={() => {
@@ -65,22 +97,50 @@ function DashboardInner() {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-display text-3xl uppercase tracking-wide">Tổng quan</h1>
+      <div>
+        <h1 className="font-display text-3xl uppercase tracking-wide">Tổng quan</h1>
+        <p className="mt-1 text-sm text-ink-mute">Số liệu theo đơn hàng và kho hiện tại.</p>
+      </div>
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <StatCard label="Tổng doanh thu" value={formatVND(revenue)} sub={`${validOrders.length} đơn đã tính (trừ đơn hủy)`} />
-        <StatCard label="Tổng đơn hàng" value={formatCount(orders.length)} sub={`${orders.filter((o) => o.status === "cho_xac_nhan").length} đơn chờ xác nhận`} />
-        <StatCard label="Tổng sản phẩm" value={formatCount(products.length)} sub={`${formatCount(totalStock)} đôi đang tồn kho`} />
+        <StatCard
+          label="Tổng doanh thu"
+          value={formatVND(revenue)}
+          countTo={revenue}
+          formatValue={formatVND}
+          sub={`${validOrders.length} đơn đã tính (trừ đơn hủy)`}
+          delay={0}
+        />
+        <StatCard
+          label="Tổng đơn hàng"
+          value={formatCount(orders.length)}
+          countTo={orders.length}
+          formatValue={formatCount}
+          sub={`${orders.filter((o) => o.status === "cho_xac_nhan").length} đơn chờ xác nhận`}
+          delay={70}
+        />
+        <StatCard
+          label="Tổng sản phẩm"
+          value={formatCount(products.length)}
+          countTo={products.length}
+          formatValue={formatCount}
+          sub={`${formatCount(totalStock)} đôi đang tồn kho`}
+          delay={140}
+        />
         <StatCard
           label="Tồn kho thấp"
           value={formatCount(lowStock.length)}
+          countTo={lowStock.length}
+          formatValue={formatCount}
           sub={outOfStock.length > 0 ? `${outOfStock.length} sản phẩm đã hết hàng` : "Chưa có sản phẩm hết hàng"}
+          delay={210}
         />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <section className="rounded-2xl border border-line bg-white p-4">
+        <section className="rounded-2xl border border-line bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
           <h2 className="font-display text-xl uppercase tracking-wide">Đơn hàng theo trạng thái</h2>
+          <div className="mt-2 h-1 w-10 rounded-full bg-volt" aria-hidden="true" />
           {orders.length === 0 ? (
             <div className="mt-4">
               <EmptyState title="Chưa có đơn hàng nào" hint="Đơn khách đặt sẽ hiện ở đây." />
@@ -93,49 +153,56 @@ function DashboardInner() {
                     <span>{ORDER_STATUS_LABELS[status]}</span>
                     <span className="font-semibold">{count} đơn</span>
                   </div>
-                  <div className="mt-1 h-3 overflow-hidden rounded-full bg-paper">
-                    <div
-                      className="h-full rounded-full bg-volt"
-                      style={{ width: `${(count / maxStatusCount) * 100}%` }}
-                    />
-                  </div>
+                  <AnimatedBar
+                    ratio={count / maxStatusCount}
+                    className={status === "dang_giao" ? "bg-volt" : "bg-ink"}
+                  />
                 </li>
               ))}
             </ul>
           )}
-          <Link to="/admin/orders" className="mt-4 inline-block text-sm font-semibold text-ink-mute hover:text-ink">
-            Xem tất cả đơn hàng →
+          <Link
+            to="/admin/orders"
+            className="group mt-4 inline-flex items-center gap-1 text-sm font-semibold text-ink-mute transition hover:text-ink"
+          >
+            Xem tất cả đơn hàng
+            <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">
+              →
+            </span>
           </Link>
         </section>
 
-        <section className="rounded-2xl border border-line bg-white p-4">
+        <section className="rounded-2xl border border-line bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
           <h2 className="font-display text-xl uppercase tracking-wide">Bán chạy nhất</h2>
+          <div className="mt-2 h-1 w-10 rounded-full bg-volt" aria-hidden="true" />
           <ul className="mt-4 space-y-3">
             {topSellers.map((p) => (
-              <li key={p.id}>
+              <li key={p.id} className="-mx-2 rounded-lg px-2 py-1 transition-colors hover:bg-paper">
                 <div className="flex justify-between gap-2 text-sm">
                   <span className="truncate">{p.name}</span>
                   <span className="shrink-0 font-semibold">{formatCount(p.sold)} đôi</span>
                 </div>
-                <div className="mt-1 h-3 overflow-hidden rounded-full bg-paper">
-                  <div
-                    className="h-full rounded-full bg-ink"
-                    style={{ width: `${(p.sold / maxSold) * 100}%` }}
-                  />
-                </div>
+                <AnimatedBar ratio={p.sold / maxSold} className="bg-ink" />
               </li>
             ))}
           </ul>
-          <Link to="/admin/products" className="mt-4 inline-block text-sm font-semibold text-ink-mute hover:text-ink">
-            Quản lý sản phẩm →
+          <Link
+            to="/admin/products"
+            className="group mt-4 inline-flex items-center gap-1 text-sm font-semibold text-ink-mute transition hover:text-ink"
+          >
+            Quản lý sản phẩm
+            <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">
+              →
+            </span>
           </Link>
         </section>
       </div>
 
-      <section className="rounded-2xl border border-line bg-white p-4">
+      <section className="rounded-2xl border border-line bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
         <h2 className="font-display text-xl uppercase tracking-wide">
           Sản phẩm tồn kho thấp (có size chỉ còn 1–5 đôi)
         </h2>
+        <div className="mt-2 h-1 w-10 rounded-full bg-volt" aria-hidden="true" />
         {lowStock.length === 0 ? (
           <div className="mt-4">
             <EmptyState title="Không có sản phẩm tồn kho thấp" hint="Mọi size đều còn trên 5 đôi." />
@@ -143,7 +210,10 @@ function DashboardInner() {
         ) : (
           <ul className="mt-4 divide-y divide-line">
             {lowStock.map((p) => (
-              <li key={p.id} className="flex flex-wrap items-center justify-between gap-2 py-2 text-sm">
+              <li
+                key={p.id}
+                className="-mx-2 flex flex-wrap items-center justify-between gap-2 rounded-lg px-2 py-2 text-sm transition-colors hover:bg-paper"
+              >
                 <span className="font-medium">{p.name}</span>
                 <span className="text-ink-mute">
                   {p.sizes

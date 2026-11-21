@@ -25,22 +25,44 @@ function AdminShell() {
 
   return (
     <div className="min-h-screen bg-paper">
-      <header className="border-b border-line bg-white">
+      <style>{`
+        @keyframes admin-fade-up {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .admin-fade-up {
+          animation: admin-fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .admin-fade-up { animation: none; }
+        }
+      `}</style>
+      <header className="sticky top-0 z-40 border-b border-line bg-white/95 shadow-[0_1px_2px_rgba(0,0,0,0.04)] backdrop-blur">
+        <div className="h-1 bg-volt" aria-hidden="true" />
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-6 py-4">
-          <Link to="/admin" className="font-display text-2xl uppercase tracking-wide">
-            Amazing<span className="text-ember">.</span> Admin
+          <Link to="/admin" className="group">
+            <span className="font-display text-2xl uppercase tracking-wide">
+              Amazing<span className="text-ember">.</span> Admin
+            </span>
+            <span
+              className="mt-1 block h-1 w-12 rounded-full bg-volt transition-all duration-200 group-hover:w-20"
+              aria-hidden="true"
+            />
           </Link>
           <div className="flex items-center gap-3 text-sm">
             <span className="text-ink-mute">
               Xin chào, <strong className="text-ink">{user.name}</strong> ({user.email})
             </span>
-            <Link to="/" className="rounded-full border border-line px-4 py-2 font-semibold hover:bg-paper">
+            <Link
+              to="/"
+              className="rounded-full border border-line px-4 py-2 font-semibold transition hover:border-ink/40 hover:bg-paper active:scale-[0.98]"
+            >
               Xem cửa hàng
             </Link>
             <button
               type="button"
               onClick={handleLogout}
-              className="rounded-full bg-ink px-4 py-2 font-semibold text-paper hover:opacity-90"
+              className="rounded-full bg-ink px-4 py-2 font-semibold text-paper transition hover:bg-ink-soft active:scale-[0.98]"
             >
               Đăng xuất
             </button>
@@ -56,12 +78,22 @@ function AdminShell() {
               to={item.to}
               end={item.end}
               className={({ isActive }) =>
-                `rounded-full px-4 py-2 text-sm font-semibold ${
-                  isActive ? "bg-ink text-paper" : "bg-white text-ink hover:bg-line/60"
+                `flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-all duration-200 active:scale-[0.98] ${
+                  isActive
+                    ? "border-ink bg-ink text-volt shadow-[0_4px_12px_rgba(0,0,0,0.18)]"
+                    : "border-line bg-white text-ink hover:-translate-y-px hover:border-ink/40"
                 }`
               }
             >
-              {item.label}
+              {({ isActive }) => (
+                <>
+                  <span
+                    className={`h-2 w-2 shrink-0 rounded-full ${isActive ? "bg-volt" : "bg-transparent"}`}
+                    aria-hidden="true"
+                  />
+                  {item.label}
+                </>
+              )}
             </NavLink>
           ))}
         </nav>

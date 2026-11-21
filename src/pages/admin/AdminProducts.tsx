@@ -14,7 +14,7 @@ import { ProductForm } from "../../components/admin/ProductForm";
 import type { Brand } from "../../types";
 
 const inputCls =
-  "rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-ink";
+  "rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none transition focus:border-ink focus:ring-2 focus:ring-volt/60";
 
 function AdminProductsInner() {
   const { data: products, isPending, isError, error, refetch } = useAdminProducts();
@@ -65,18 +65,21 @@ function AdminProductsInner() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-display text-3xl uppercase tracking-wide">
-          Sản phẩm {products ? `(${formatCount(products.length)})` : ""}
-        </h1>
+        <div>
+          <h1 className="font-display text-3xl uppercase tracking-wide">
+            Sản phẩm {products ? `(${formatCount(products.length)})` : ""}
+          </h1>
+          <p className="mt-1 text-sm text-ink-mute">Giá, tồn kho và trạng thái bán của từng sản phẩm.</p>
+        </div>
         <button
           type="button"
           onClick={() => {
             setEditing(null);
             setCreating(true);
           }}
-          className="rounded-full bg-volt px-5 py-2 text-sm font-bold text-ink hover:bg-volt-deep"
+          className="rounded-full bg-volt px-5 py-2 text-sm font-bold text-ink shadow-[0_1px_2px_rgba(0,0,0,0.06)] transition-all duration-200 hover:-translate-y-px hover:bg-volt-deep hover:shadow-[0_6px_16px_rgba(0,0,0,0.10)] active:translate-y-0 active:scale-[0.98]"
         >
           + Thêm sản phẩm
         </button>
@@ -101,11 +104,12 @@ function AdminProductsInner() {
           <option value="nike">Nike</option>
           <option value="adidas">Adidas</option>
           <option value="puma">Puma</option>
+          <option value="vans">Vans</option>
         </select>
       </div>
 
       {notice ? (
-        <p role="status" className="rounded-xl bg-volt/40 px-3 py-2 text-sm font-medium">
+        <p role="status" className="rounded-xl border border-volt-deep/50 bg-volt/40 px-3 py-2 text-sm font-medium">
           {notice}
         </p>
       ) : null}
@@ -131,10 +135,10 @@ function AdminProductsInner() {
           hint={search || brandFilter !== "all" ? "Thử đổi từ khóa hoặc bỏ lọc hãng." : "Bấm “Thêm sản phẩm” để tạo sản phẩm đầu tiên."}
         />
       ) : (
-        <div className="overflow-x-auto rounded-2xl border border-line bg-white">
+        <div className="overflow-x-auto rounded-2xl border border-line bg-white shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
           <table className="w-full min-w-[820px] text-left text-sm">
             <thead>
-              <tr className="border-b border-line bg-paper">
+              <tr className="border-b border-line bg-paper text-xs font-semibold uppercase tracking-wide text-ink-mute">
                 <th className="px-4 py-3">Sản phẩm</th>
                 <th className="px-4 py-3">Hãng</th>
                 <th className="px-4 py-3">Giá</th>
@@ -148,13 +152,13 @@ function AdminProductsInner() {
               {filtered.map((p) => {
                 const stock = p.sizes.reduce((s, x) => s + x.stock, 0);
                 return (
-                  <tr key={p.id} className="border-b border-line last:border-0">
+                  <tr key={p.id} className="border-b border-line transition-colors last:border-0 hover:bg-paper/70">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
                         <img
                           src={p.colors[0]?.image}
                           alt={p.name}
-                          className="h-12 w-12 rounded-lg border border-line object-cover"
+                          className="h-12 w-12 rounded-lg border border-line object-cover shadow-sm"
                         />
                         <div>
                           <p className="font-semibold">{p.name}</p>
@@ -175,9 +179,15 @@ function AdminProductsInner() {
                     <td className="px-4 py-3">{formatCount(p.sold)}</td>
                     <td className="px-4 py-3">
                       {p.hidden ? (
-                        <span className="rounded-full bg-line px-2 py-1 text-xs font-semibold">Đã ẩn</span>
+                        <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-line px-2.5 py-1 text-xs font-semibold">
+                          <span className="h-1.5 w-1.5 rounded-full bg-ink-mute" aria-hidden="true" />
+                          Đã ẩn
+                        </span>
                       ) : (
-                        <span className="rounded-full bg-volt px-2 py-1 text-xs font-semibold">Đang bán</span>
+                        <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-volt px-2.5 py-1 text-xs font-semibold">
+                          <span className="h-1.5 w-1.5 rounded-full bg-ink" aria-hidden="true" />
+                          Đang bán
+                        </span>
                       )}
                     </td>
                     <td className="px-4 py-3">
@@ -185,7 +195,7 @@ function AdminProductsInner() {
                         <button
                           type="button"
                           onClick={() => setEditing(p)}
-                          className="rounded-full border border-line px-3 py-1 text-xs font-semibold hover:bg-paper"
+                          className="rounded-full border border-line px-3 py-1 text-xs font-semibold transition hover:border-ink/40 hover:bg-paper active:scale-95"
                         >
                           Sửa
                         </button>
@@ -193,14 +203,14 @@ function AdminProductsInner() {
                           type="button"
                           onClick={() => toggleHidden(p)}
                           disabled={updateMutation.isPending}
-                          className="rounded-full border border-line px-3 py-1 text-xs font-semibold hover:bg-paper disabled:opacity-50"
+                          className="rounded-full border border-line px-3 py-1 text-xs font-semibold transition hover:border-ink/40 hover:bg-paper active:scale-95 disabled:opacity-50"
                         >
                           {p.hidden ? "Hiện" : "Ẩn"}
                         </button>
                         <button
                           type="button"
                           onClick={() => setDeleting(p)}
-                          className="rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 hover:bg-red-50"
+                          className="rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-100 active:scale-95"
                         >
                           Xóa
                         </button>

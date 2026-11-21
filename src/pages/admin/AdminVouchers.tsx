@@ -45,25 +45,28 @@ function AdminVouchersInner() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-display text-3xl uppercase tracking-wide">
-          Mã giảm giá {vouchers ? `(${vouchers.length})` : ""}
-        </h1>
+        <div>
+          <h1 className="font-display text-3xl uppercase tracking-wide">
+            Mã giảm giá {vouchers ? `(${vouchers.length})` : ""}
+          </h1>
+          <p className="mt-1 text-sm text-ink-mute">Mã đang áp dụng, đã tắt và đã hết hạn.</p>
+        </div>
         <button
           type="button"
           onClick={() => {
             setEditing(null);
             setCreating(true);
           }}
-          className="rounded-full bg-volt px-5 py-2 text-sm font-bold text-ink hover:bg-volt-deep"
+          className="rounded-full bg-volt px-5 py-2 text-sm font-bold text-ink shadow-[0_1px_2px_rgba(0,0,0,0.06)] transition-all duration-200 hover:-translate-y-px hover:bg-volt-deep hover:shadow-[0_6px_16px_rgba(0,0,0,0.10)] active:translate-y-0 active:scale-[0.98]"
         >
           + Thêm mã giảm giá
         </button>
       </div>
 
       {notice ? (
-        <p role="status" className="rounded-xl bg-volt/40 px-3 py-2 text-sm font-medium">
+        <p role="status" className="rounded-xl border border-volt-deep/50 bg-volt/40 px-3 py-2 text-sm font-medium">
           {notice}
         </p>
       ) : null}
@@ -89,10 +92,10 @@ function AdminVouchersInner() {
           hint="Bấm “Thêm mã giảm giá” để tạo mã đầu tiên."
         />
       ) : (
-        <div className="overflow-x-auto rounded-2xl border border-line bg-white">
+        <div className="overflow-x-auto rounded-2xl border border-line bg-white shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
           <table className="w-full min-w-[820px] text-left text-sm">
             <thead>
-              <tr className="border-b border-line bg-paper">
+              <tr className="border-b border-line bg-paper text-xs font-semibold uppercase tracking-wide text-ink-mute">
                 <th className="px-4 py-3">Mã</th>
                 <th className="px-4 py-3">Giảm</th>
                 <th className="px-4 py-3">Đơn tối thiểu</th>
@@ -105,8 +108,10 @@ function AdminVouchersInner() {
               {(vouchers ?? []).map((v) => {
                 const expired = new Date(v.expiresAt).getTime() < Date.now();
                 return (
-                  <tr key={v.id} className="border-b border-line last:border-0">
-                    <td className="px-4 py-3 font-bold">{v.code}</td>
+                  <tr key={v.id} className="border-b border-line transition-colors last:border-0 hover:bg-paper/70">
+                    <td className="px-4 py-3">
+                      <span className="rounded-lg bg-paper px-2 py-1 font-bold tracking-wide">{v.code}</span>
+                    </td>
                     <td className="px-4 py-3">
                       {v.type === "percent" ? `${v.value}%` : formatVND(v.value)}
                       {v.type === "percent" && v.maxDiscount ? (
@@ -119,13 +124,20 @@ function AdminVouchersInner() {
                     <td className="px-4 py-3">{formatDateTime(v.expiresAt)}</td>
                     <td className="px-4 py-3">
                       {!v.active ? (
-                        <span className="rounded-full bg-line px-2 py-1 text-xs font-semibold">Đã tắt</span>
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-line px-2.5 py-1 text-xs font-semibold">
+                          <span className="h-1.5 w-1.5 rounded-full bg-ink-mute" aria-hidden="true" />
+                          Đã tắt
+                        </span>
                       ) : expired ? (
-                        <span className="rounded-full bg-red-100 px-2 py-1 text-xs font-semibold text-red-700">
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-red-100 px-2.5 py-1 text-xs font-semibold text-red-700">
+                          <span className="h-1.5 w-1.5 rounded-full bg-red-600" aria-hidden="true" />
                           Hết hạn
                         </span>
                       ) : (
-                        <span className="rounded-full bg-volt px-2 py-1 text-xs font-semibold">Đang áp dụng</span>
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-volt px-2.5 py-1 text-xs font-semibold">
+                          <span className="h-1.5 w-1.5 rounded-full bg-ink" aria-hidden="true" />
+                          Đang áp dụng
+                        </span>
                       )}
                     </td>
                     <td className="px-4 py-3">
@@ -133,7 +145,7 @@ function AdminVouchersInner() {
                         <button
                           type="button"
                           onClick={() => setEditing(v)}
-                          className="rounded-full border border-line px-3 py-1 text-xs font-semibold hover:bg-paper"
+                          className="rounded-full border border-line px-3 py-1 text-xs font-semibold transition hover:border-ink/40 hover:bg-paper active:scale-95"
                         >
                           Sửa
                         </button>
@@ -141,14 +153,14 @@ function AdminVouchersInner() {
                           type="button"
                           onClick={() => toggleActive(v)}
                           disabled={updateMutation.isPending}
-                          className="rounded-full border border-line px-3 py-1 text-xs font-semibold hover:bg-paper disabled:opacity-50"
+                          className="rounded-full border border-line px-3 py-1 text-xs font-semibold transition hover:border-ink/40 hover:bg-paper active:scale-95 disabled:opacity-50"
                         >
                           {v.active ? "Tắt" : "Bật"}
                         </button>
                         <button
                           type="button"
                           onClick={() => setDeleting(v)}
-                          className="rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 hover:bg-red-50"
+                          className="rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-100 active:scale-95"
                         >
                           Xóa
                         </button>
