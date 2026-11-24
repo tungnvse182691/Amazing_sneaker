@@ -40,6 +40,14 @@ body {
   color: var(--color-ink);
 }
 
+/* Focus nhìn rõ cho người dùng bàn phím — viền ink 2px + halo volt, thấy rõ
+   cả trên nền sáng lẫn nền tối. Áp dụng cho mọi element focusable. */
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--color-volt);
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -89,7 +97,19 @@ body {
   animation-direction: reverse;
 }
 
-/* Lenis smooth scroll — class do Lenis tự gắn lên <html>. */
+/* Gợi ý cuộn ở hero — nhún nhẹ, chậm hơn animate-bounce mặc định. */
+@keyframes hint-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+.animate-hint-bob {
+  animation: hint-bob 1.8s ease-in-out infinite;
+}
 html.lenis,
 html.lenis body {
   height: auto;

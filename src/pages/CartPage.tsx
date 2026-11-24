@@ -55,7 +55,7 @@ export function CartPage() {
           <p className="mt-1 text-ink-mute">Thêm vài đôi giày bạn thích vào giỏ rồi quay lại đây nhé.</p>
           <Link
             to="/shop"
-            className="mt-6 rounded-full bg-ink px-6 py-3 text-sm font-bold text-white hover:bg-ink-soft"
+            className="mt-6 rounded-full bg-ink px-6 py-3 text-sm font-bold text-white hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
           >
             Xem giày ngay
           </Link>
@@ -73,12 +73,12 @@ export function CartPage() {
                     to={`/product/${item.slug}`}
                     className="flex h-24 w-24 shrink-0 items-center justify-center rounded-xl bg-[#EFEDE8] p-2"
                   >
-                    <img src={item.image} alt={item.name} className="max-h-full max-w-full object-contain" />
+                    <img src={item.image} alt={item.name} width={600} height={600} className="max-h-full max-w-full object-contain" />
                   </Link>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <Link to={`/product/${item.slug}`} className="font-bold hover:underline">
+                        <Link to={`/product/${item.slug}`} className="font-bold hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
                           {item.name}
                         </Link>
                         <p className="text-sm text-ink-mute">
@@ -89,7 +89,7 @@ export function CartPage() {
                         type="button"
                         aria-label={`Xóa ${item.name}`}
                         onClick={() => removeItem(item.productId, item.size)}
-                        className="flex h-9 w-9 shrink-0 items-center justify-center text-ink-mute hover:text-ember"
+                        className="flex h-11 w-11 shrink-0 items-center justify-center text-ink-mute hover:text-ember focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:h-9 md:w-9"
                       >
                         <Trash2 className="h-4 w-4" />
                       </button>
@@ -100,7 +100,7 @@ export function CartPage() {
                           type="button"
                           aria-label="Giảm số lượng"
                           onClick={() => updateQuantity(item.productId, item.size, item.quantity - 1)}
-                          className="flex h-9 w-9 items-center justify-center hover:text-ember"
+                          className="flex h-11 w-11 items-center justify-center hover:text-ember focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:h-9 md:w-9"
                         >
                           <Minus className="h-4 w-4" />
                         </button>
@@ -109,7 +109,7 @@ export function CartPage() {
                           type="button"
                           aria-label="Tăng số lượng"
                           onClick={() => updateQuantity(item.productId, item.size, item.quantity + 1)}
-                          className="flex h-9 w-9 items-center justify-center hover:text-ember"
+                          className="flex h-11 w-11 items-center justify-center hover:text-ember focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:h-9 md:w-9"
                         >
                           <Plus className="h-4 w-4" />
                         </button>
@@ -155,12 +155,12 @@ export function CartPage() {
                     onChange={(e) => setCode(e.target.value.toUpperCase())}
                     placeholder="Mã giảm giá (vd: CHAO10)"
                     aria-label="Mã giảm giá"
-                    className="min-w-0 flex-1 rounded-full border border-line px-4 py-2 text-sm outline-none focus:border-ink"
+                    className="min-w-0 flex-1 rounded-full border border-line px-4 py-3 text-sm focus:border-ink md:py-2"
                   />
                   <button
                     type="button"
                     onClick={applyVoucher}
-                    className="rounded-full border border-ink px-4 py-2 text-sm font-bold hover:bg-ink hover:text-white"
+                    className="rounded-full border border-ink px-4 py-3 text-sm font-bold hover:bg-ink hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:py-2"
                   >
                     Áp dụng
                   </button>
@@ -194,7 +194,7 @@ export function CartPage() {
             </dl>
             <Link
               to="/checkout"
-              className="block rounded-full bg-ink px-6 py-3 text-center font-bold text-white hover:bg-ink-soft"
+              className="block rounded-full bg-ink px-6 py-3 text-center font-bold text-white hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
             >
               Tiến hành thanh toán
             </Link>

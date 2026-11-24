@@ -65,7 +65,7 @@ export const products: Product[] = [
     sold: 23800,
     isHot: true,
     description:
-      "Đôi giày trắng quốc dân — da mềm, đế Air bền bỉ, phối được với mọi outfit từ đi học tới đi chơi.",
+      "Đôi giày trắng quốc dân, da mềm, đế Air bền bỉ, phối được với mọi outfit từ đi học tới đi chơi.",
     cutoutImage: "https://files.catbox.moe/h1219d.png",
   },
   {
@@ -86,7 +86,7 @@ export const products: Product[] = [
     rating: 4.8,
     sold: 15600,
     description:
-      "Túi khí Air Max lộ rõ ở gót, phối màu xám navy đỏ cá tính — biểu tượng streetwear từ năm 1990.",
+      "Túi khí Air Max lộ rõ ở gót, phối màu xám navy đỏ cá tính, biểu tượng streetwear từ năm 1990.",
     cutoutImage: "https://files.catbox.moe/03cwko.png",
   },
   {
@@ -495,7 +495,7 @@ export const products: Product[] = [
     sold: 18200,
     isNew: true,
     description:
-      "Đôi giày trượt ván đầu tiên có sọc Sidestripe huyền thoại, ra mắt năm 1977 — thân đen, sọc trắng, đế waffle bám chắc.",
+      "Đôi giày trượt ván đầu tiên có sọc Sidestripe huyền thoại, ra mắt năm 1977, thân đen, sọc trắng, đế waffle bám chắc.",
     cutoutImage: "https://files.catbox.moe/hwnvhi.png",
   },
   // Sk8-Hi Black/White VN000D5IB8C, ảnh GOAT đã xem bằng mắt đúng mẫu +

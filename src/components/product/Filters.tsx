@@ -63,7 +63,7 @@ export function Filters({
           <button
             type="button"
             onClick={onClear}
-            className="text-sm font-bold text-ember underline"
+            className="text-sm font-bold text-ember underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
           >
             Xóa hết ({activeCount})
           </button>
@@ -123,7 +123,7 @@ export function Filters({
                 type="button"
                 onClick={() => onChange({ ...filters, sizes: toggle(filters.sizes, s) })}
                 aria-pressed={active}
-                className={`h-10 w-10 rounded-lg border text-sm font-bold ${
+                className={`h-11 w-11 rounded-lg border text-sm font-bold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:h-10 md:w-10 ${
                   active ? "border-ink bg-ink text-white" : "border-line bg-white hover:border-ink"
                 }`}
               >
@@ -149,7 +149,7 @@ export function Filters({
                 onClick={() =>
                   onChange({ ...filters, colorHexes: toggle(filters.colorHexes, c.hex) })
                 }
-                className={`h-9 w-9 rounded-full border-2 ${
+                className={`h-11 w-11 rounded-full border-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:h-9 md:w-9 ${
                   active ? "border-ember ring-2 ring-ember/30" : "border-line"
                 }`}
                 style={{ backgroundColor: c.hex }}
@@ -175,7 +175,7 @@ export function Filters({
             aria-label="Giá tối thiểu"
             value={filters.minPrice}
             onChange={(e) => onChange({ ...filters, minPrice: e.target.value })}
-            className="w-full rounded-lg border border-line px-3 py-2 text-sm outline-none focus:border-ink"
+            className="w-full rounded-lg border border-line px-3 py-3 text-sm focus:border-ink md:py-2"
           />
           <span className="text-ink-mute">–</span>
           <input
@@ -186,7 +186,7 @@ export function Filters({
             aria-label="Giá tối đa"
             value={filters.maxPrice}
             onChange={(e) => onChange({ ...filters, maxPrice: e.target.value })}
-            className="w-full rounded-lg border border-line px-3 py-2 text-sm outline-none focus:border-ink"
+            className="w-full rounded-lg border border-line px-3 py-3 text-sm focus:border-ink md:py-2"
           />
         </div>
         <p className="mt-2 text-xs text-ink-mute">

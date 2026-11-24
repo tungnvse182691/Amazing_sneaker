@@ -23,8 +23,8 @@ function AnimatedBar({ ratio, className }: { ratio: number; className: string })
   return (
     <div className="mt-1 h-3 overflow-hidden rounded-full bg-paper">
       <div
-        className={`h-full rounded-full transition-[width] duration-700 ease-out ${className}`}
-        style={{ width: `${width}%` }}
+        className={`h-full w-full origin-left rounded-full transition-transform duration-700 ease-out ${className}`}
+        style={{ transform: `scaleX(${width / 100})` }}
       />
     </div>
   );
@@ -163,7 +163,7 @@ function DashboardInner() {
           )}
           <Link
             to="/admin/orders"
-            className="group mt-4 inline-flex items-center gap-1 text-sm font-semibold text-ink-mute transition hover:text-ink"
+            className="group mt-4 inline-flex items-center gap-1 text-sm font-semibold text-ink-mute transition hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
           >
             Xem tất cả đơn hàng
             <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">
@@ -188,7 +188,7 @@ function DashboardInner() {
           </ul>
           <Link
             to="/admin/products"
-            className="group mt-4 inline-flex items-center gap-1 text-sm font-semibold text-ink-mute transition hover:text-ink"
+            className="group mt-4 inline-flex items-center gap-1 text-sm font-semibold text-ink-mute transition hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
           >
             Quản lý sản phẩm
             <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">

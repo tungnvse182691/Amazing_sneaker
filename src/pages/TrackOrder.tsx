@@ -85,7 +85,7 @@ export function TrackOrder() {
             setCode("AS-20261120-001");
             setParams({ code: "AS-20261120-001" });
           }}
-          className="font-bold text-ember underline"
+          className="font-bold text-ember underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
         >
           AS-20261120-001
         </button>
@@ -99,12 +99,12 @@ export function TrackOrder() {
             onChange={(e) => setInput(e.target.value.toUpperCase())}
             placeholder="Ví dụ: AS-20261120-001"
             aria-label="Mã đơn hàng"
-            className="w-full rounded-full border border-line bg-white py-3 pl-9 pr-3 uppercase outline-none focus:border-ink"
+            className="w-full rounded-full border border-line bg-white py-3 pl-9 pr-3 uppercase focus:border-ink"
           />
         </label>
         <button
           type="submit"
-          className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white hover:bg-ink-soft"
+          className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
         >
           Tra cứu
         </button>
@@ -129,7 +129,7 @@ export function TrackOrder() {
               <button
                 type="button"
                 onClick={() => refetch()}
-                className="mt-4 rounded-full bg-ink px-6 py-2 text-sm font-bold text-white hover:bg-ink-soft"
+                className="mt-4 rounded-full bg-ink px-6 py-3 text-sm font-bold text-white hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:py-2"
               >
                 Thử lại
               </button>

@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+
 export function TableSkeleton({ rows = 5, cols = 5 }: { rows?: number; cols?: number }) {
   return (
     <div className="overflow-x-auto rounded-2xl border border-line bg-white" aria-label="Đang tải">
@@ -5,7 +7,7 @@ export function TableSkeleton({ rows = 5, cols = 5 }: { rows?: number; cols?: nu
         <thead>
           <tr className="border-b border-line bg-paper">
             {Array.from({ length: cols }).map((_, i) => (
-              <th key={i} className="px-4 py-3">
+              <th key={i} className="sticky top-0 bg-paper px-4 py-3">
                 <span className="block h-4 w-20 animate-pulse rounded bg-line" />
               </th>
             ))}
@@ -44,7 +46,7 @@ export function ErrorState({ message, onRetry }: { message: string; onRetry: () 
       <button
         type="button"
         onClick={onRetry}
-        className="mt-4 rounded-full bg-ink px-5 py-2 text-sm font-semibold text-paper hover:opacity-90"
+        className="mt-4 rounded-full bg-ink px-5 py-3 text-sm font-semibold text-paper hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:py-2"
       >
         Thử lại
       </button>
@@ -61,27 +63,39 @@ export function ModalShell({
   onClose: () => void;
   children: React.ReactNode;
 }) {
+  const ref = useRef<HTMLDialogElement>(null);
+
+  // Component chỉ render khi modal mở nên mở dialog ngay khi mount.
+  // <dialog> native tự xử: bấm Escape, trả focus về chỗ cũ khi đóng.
+  useEffect(() => {
+    const d = ref.current;
+    if (d && !d.open) d.showModal();
+  }, []);
+
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
-      role="dialog"
-      aria-modal="true"
+    <dialog
+      ref={ref}
       aria-label={title}
+      onCancel={onClose}
+      onClick={(e) => {
+        if (e.target === ref.current) onClose();
+      }}
+      className="w-full max-w-2xl rounded-2xl bg-white p-0 shadow-xl backdrop:bg-black/50"
     >
-      <div className="flex max-h-[90vh] w-full max-w-2xl flex-col rounded-2xl bg-white shadow-xl">
+      <div className="flex max-h-[90vh] w-full flex-col rounded-2xl bg-white">
         <div className="flex shrink-0 items-start justify-between gap-4 px-6 pt-6">
           <h2 className="font-display text-2xl uppercase tracking-wide">{title}</h2>
           <button
             type="button"
             onClick={onClose}
             aria-label="Đóng"
-            className="rounded-full border border-line px-3 py-1 text-sm font-semibold hover:bg-paper"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line text-sm font-semibold hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:h-auto md:w-auto md:px-3 md:py-1"
           >
             ✕
           </button>
         </div>
         <div className="mt-4 min-h-0 flex-1 overflow-y-auto px-6 pb-4">{children}</div>
       </div>
-    </div>
+    </dialog>
   );
 }

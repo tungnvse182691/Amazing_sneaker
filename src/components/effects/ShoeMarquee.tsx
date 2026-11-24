@@ -234,7 +234,7 @@ export default function ShoeMarquee() {
           Bộ sưu tập <span className="text-volt">đang chạy</span>
         </h2>
         <p className="mt-3 text-sm text-paper/70 md:text-base">
-          Nike · Adidas · Puma · Vans — 12 đôi nổi bật. Kéo chuột để tự lướt, không kéo thì giày cứ tự
+          Nike · Adidas · Puma · Vans: 12 đôi nổi bật. Kéo chuột để tự lướt, không kéo thì giày cứ tự
           chạy. Bấm vào đôi nào thích để xem chi tiết.
         </p>
       </div>

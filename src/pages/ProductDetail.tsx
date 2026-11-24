@@ -66,13 +66,13 @@ export function ProductDetail() {
           <button
             type="button"
             onClick={() => refetch()}
-            className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white hover:bg-ink-soft"
+            className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
           >
             Thử lại
           </button>
           <Link
             to="/shop"
-            className="rounded-full border border-ink px-6 py-3 text-sm font-bold hover:bg-ink hover:text-white"
+            className="rounded-full border border-ink px-6 py-3 text-sm font-bold hover:bg-ink hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
           >
             Về cửa hàng
           </Link>
@@ -120,9 +120,9 @@ export function ProductDetail() {
   return (
     <main className="mx-auto max-w-7xl px-4 py-8 md:px-6">
       <nav className="mb-6 text-sm text-ink-mute" aria-label="Đường dẫn">
-        <Link to="/" className="hover:text-ink">Trang chủ</Link>
+        <Link to="/" className="hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">Trang chủ</Link>
         {" / "}
-        <Link to="/shop" className="hover:text-ink">Cửa hàng</Link>
+        <Link to="/shop" className="hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">Cửa hàng</Link>
         {" / "}
         <Link to={`/brand/${product.brand}`} className="hover:text-ink">
           {BRAND_LABELS[product.brand]}
@@ -195,7 +195,7 @@ export function ProductDetail() {
                   aria-label={`Chọn màu ${c.name}`}
                   aria-pressed={i === colorIndex}
                   onClick={() => setColorIndex(i)}
-                  className={`flex h-11 w-11 items-center justify-center rounded-full border-2 ${
+                  className={`flex h-11 w-11 items-center justify-center rounded-full border-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink ${
                     i === colorIndex ? "border-ink ring-2 ring-ink/20" : "border-line"
                   }`}
                   style={{ backgroundColor: c.hex }}
@@ -232,7 +232,7 @@ export function ProductDetail() {
                       setQuantity(1);
                       setSizeError(null);
                     }}
-                    className={`h-12 w-12 rounded-xl border text-sm font-bold ${
+                    className={`h-12 w-12 rounded-xl border text-sm font-bold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink ${
                       out
                         ? "cursor-not-allowed border-line bg-line/60 text-ink-mute line-through"
                         : active
@@ -259,7 +259,7 @@ export function ProductDetail() {
                 type="button"
                 aria-label="Giảm số lượng"
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                className="flex h-12 w-12 items-center justify-center hover:text-ember"
+                className="flex h-12 w-12 items-center justify-center hover:text-ember focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
               >
                 <Minus className="h-4 w-4" />
               </button>
@@ -269,7 +269,7 @@ export function ProductDetail() {
                 aria-label="Tăng số lượng"
                 disabled={quantity >= maxQty}
                 onClick={() => setQuantity((q) => Math.min(maxQty, q + 1))}
-                className="flex h-12 w-12 items-center justify-center hover:text-ember disabled:opacity-30"
+                className="flex h-12 w-12 items-center justify-center hover:text-ember focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink disabled:opacity-30"
               >
                 <Plus className="h-4 w-4" />
               </button>
@@ -278,7 +278,7 @@ export function ProductDetail() {
               type="button"
               onClick={handleAddToCart}
               disabled={!inStock}
-              className={`flex flex-1 items-center justify-center gap-2 rounded-full px-6 py-3 font-bold text-white ${
+              className={`flex flex-1 items-center justify-center gap-2 rounded-full px-6 py-3 font-bold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink ${
                 added ? "bg-volt-deep text-ink" : "bg-ink hover:bg-ink-soft"
               } disabled:cursor-not-allowed disabled:bg-line disabled:text-ink-mute`}
             >
@@ -289,7 +289,7 @@ export function ProductDetail() {
               type="button"
               onClick={() => toggleWishlist(product.id)}
               aria-label={wished ? "Bỏ khỏi yêu thích" : "Thêm vào yêu thích"}
-              className={`flex h-12 w-12 items-center justify-center rounded-full border ${
+              className={`flex h-12 w-12 items-center justify-center rounded-full border focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink ${
                 wished ? "border-ember bg-ember text-white" : "border-line bg-white hover:border-ember hover:text-ember"
               }`}
             >

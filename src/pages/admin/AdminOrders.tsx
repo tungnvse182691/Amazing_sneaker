@@ -12,7 +12,7 @@ import { OrderDetailModal } from "../../components/admin/OrderDetailModal";
 import type { Order, OrderStatus } from "../../types";
 
 const inputCls =
-  "rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none transition focus:border-ink focus:ring-2 focus:ring-volt/60";
+  "rounded-xl border border-line bg-white px-3 py-2 text-sm transition focus:border-ink focus:ring-2 focus:ring-volt/60";
 
 /** Màu của ô trạng thái đơn, theo từng trạng thái (chấm màu + nền nhạt cùng tông). */
 const ORDER_STATUS_PILL: Record<OrderStatus, string> = {
@@ -120,12 +120,12 @@ function AdminOrdersInner() {
           <table className="w-full min-w-[860px] text-left text-sm">
             <thead>
               <tr className="border-b border-line bg-paper text-xs font-semibold uppercase tracking-wide text-ink-mute">
-                <th className="px-4 py-3">Mã đơn</th>
-                <th className="px-4 py-3">Khách hàng</th>
-                <th className="px-4 py-3">Ngày đặt</th>
-                <th className="px-4 py-3">Tổng tiền</th>
-                <th className="px-4 py-3">Trạng thái</th>
-                <th className="px-4 py-3 text-right">Thao tác</th>
+                <th className="sticky top-0 bg-paper px-4 py-3">Mã đơn</th>
+                <th className="sticky top-0 bg-paper px-4 py-3">Khách hàng</th>
+                <th className="sticky top-0 bg-paper px-4 py-3">Ngày đặt</th>
+                <th className="sticky top-0 bg-paper px-4 py-3">Tổng tiền</th>
+                <th className="sticky top-0 bg-paper px-4 py-3">Trạng thái</th>
+                <th className="sticky top-0 bg-paper px-4 py-3 text-right">Thao tác</th>
               </tr>
             </thead>
             <tbody>
@@ -151,7 +151,7 @@ function AdminOrdersInner() {
                         disabled={updateMutation.isPending}
                         onChange={(e) => changeStatus(o, e.target.value as OrderStatus)}
                         aria-label={`Đổi trạng thái đơn ${o.code}`}
-                        className="cursor-pointer bg-transparent py-1 pr-1 text-sm font-semibold outline-none disabled:opacity-50"
+                        className="cursor-pointer bg-transparent py-1 pr-1 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink disabled:opacity-50"
                       >
                         {ORDER_STATUSES.map((s) => (
                           <option key={s} value={s}>
@@ -166,7 +166,7 @@ function AdminOrdersInner() {
                       <button
                         type="button"
                         onClick={() => setDetail(o)}
-                        className="rounded-full border border-line px-3 py-1 text-xs font-semibold transition hover:border-ink/40 hover:bg-paper active:scale-95"
+                        className="rounded-full border border-line px-3 py-1 text-xs font-semibold transition hover:border-ink/40 hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink active:scale-95"
                       >
                         Xem chi tiết
                       </button>
@@ -176,7 +176,7 @@ function AdminOrdersInner() {
                           type="button"
                           disabled={updateMutation.isPending}
                           onClick={() => changeStatus(o, s)}
-                          className={`rounded-full px-3 py-1 text-xs font-semibold text-paper transition active:scale-95 disabled:opacity-50 ${
+                          className={`rounded-full px-3 py-1 text-xs font-semibold text-paper transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink active:scale-95 disabled:opacity-50 ${
                             s === "da_huy" ? "bg-red-600 hover:bg-red-700" : "bg-ink hover:bg-ink-soft"
                           }`}
                         >

@@ -46,7 +46,7 @@ export function StatCard({
 
   return (
     <div
-      className="admin-fade-up rounded-2xl border border-line bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,0.05)] transition-all duration-200 hover:-translate-y-0.5 hover:border-ink/20 hover:shadow-[0_10px_24px_rgba(0,0,0,0.08)]"
+      className="admin-fade-up rounded-2xl border border-line bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,0.05)] transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-ink/20 hover:shadow-[0_10px_24px_rgba(0,0,0,0.08)]"
       style={{ animationDelay: `${delay}ms` }}
     >
       <div className="flex items-center justify-between gap-2">

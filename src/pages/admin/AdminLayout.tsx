@@ -45,7 +45,7 @@ function AdminShell() {
               Amazing<span className="text-ember">.</span> Admin
             </span>
             <span
-              className="mt-1 block h-1 w-12 rounded-full bg-volt transition-all duration-200 group-hover:w-20"
+              className="mt-1 block h-1 w-20 origin-left scale-x-[0.6] rounded-full bg-volt transition-transform duration-200 group-hover:scale-x-100"
               aria-hidden="true"
             />
           </Link>
@@ -55,14 +55,14 @@ function AdminShell() {
             </span>
             <Link
               to="/"
-              className="rounded-full border border-line px-4 py-2 font-semibold transition hover:border-ink/40 hover:bg-paper active:scale-[0.98]"
+              className="rounded-full border border-line px-4 py-2 font-semibold transition hover:border-ink/40 hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink active:scale-[0.98]"
             >
               Xem cửa hàng
             </Link>
             <button
               type="button"
               onClick={handleLogout}
-              className="rounded-full bg-ink px-4 py-2 font-semibold text-paper transition hover:bg-ink-soft active:scale-[0.98]"
+              className="rounded-full bg-ink px-4 py-2 font-semibold text-paper transition hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink active:scale-[0.98]"
             >
               Đăng xuất
             </button>
@@ -78,7 +78,7 @@ function AdminShell() {
               to={item.to}
               end={item.end}
               className={({ isActive }) =>
-                `flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-all duration-200 active:scale-[0.98] ${
+                `flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-[transform,border-color,background-color,color,box-shadow] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink active:scale-[0.98] ${
                   isActive
                     ? "border-ink bg-ink text-volt shadow-[0_4px_12px_rgba(0,0,0,0.18)]"
                     : "border-line bg-white text-ink hover:-translate-y-px hover:border-ink/40"

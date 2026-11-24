@@ -11,6 +11,7 @@ const NAV = [
   { to: "/brand/nike", label: "Nike" },
   { to: "/brand/adidas", label: "Adidas" },
   { to: "/brand/puma", label: "Puma" },
+  { to: "/brand/vans", label: "Vans" },
   { to: "/track", label: "Tra cứu đơn" },
 ];
 
@@ -34,7 +35,7 @@ export function Header() {
       <div className="mx-auto flex max-w-7xl items-center gap-2 px-4 py-3 md:gap-4 md:px-6">
         <button
           type="button"
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line md:hidden"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:hidden"
           aria-label="Mở menu"
           onClick={() => setMenuOpen((v) => !v)}
         >
@@ -51,7 +52,9 @@ export function Header() {
               key={n.to}
               to={n.to}
               className={({ isActive }) =>
-                isActive ? "text-ember underline underline-offset-4" : "hover:text-ember"
+                isActive
+                  ? "text-ember underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                  : "hover:text-ember focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
               }
             >
               {n.label}
@@ -67,7 +70,7 @@ export function Header() {
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Tìm giày, hãng, dòng giày…"
               aria-label="Tìm kiếm giày"
-              className="w-full rounded-full border border-line bg-white py-2 pl-9 pr-3 text-sm outline-none focus:border-ink"
+              className="w-full rounded-full border border-line bg-white py-2 pl-9 pr-3 text-sm focus:border-ink"
             />
           </label>
         </form>
@@ -76,7 +79,7 @@ export function Header() {
           <Link
             to="/wishlist"
             aria-label={`Yêu thích (${wishCount})`}
-            className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line bg-white hover:border-ink"
+            className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line bg-white hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:h-10 md:w-10"
           >
             <Heart className="h-5 w-5" />
             {wishCount > 0 && (
@@ -90,7 +93,7 @@ export function Header() {
             onClick={openDrawer}
             data-cart-target
             aria-label={`Giỏ hàng (${cartCount} sản phẩm)`}
-            className="relative flex h-10 shrink-0 items-center gap-1.5 rounded-full bg-ink px-2 text-sm font-bold text-white hover:bg-ink-soft md:gap-2 md:px-4"
+            className="relative flex h-11 shrink-0 items-center gap-1.5 rounded-full border border-line bg-white px-2 text-sm font-bold text-ink hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:h-10 md:gap-2 md:px-4"
           >
             <ShoppingBag className="h-5 w-5" />
             <span className="hidden sm:inline">Giỏ hàng</span>
@@ -111,7 +114,7 @@ export function Header() {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Tìm giày, hãng, dòng giày…"
                 aria-label="Tìm kiếm giày"
-                className="w-full rounded-full border border-line bg-white py-2 pl-9 pr-3 text-sm outline-none focus:border-ink"
+                className="w-full rounded-full border border-line bg-white py-3 pl-9 pr-3 text-sm focus:border-ink"
               />
             </label>
           </form>
@@ -121,7 +124,11 @@ export function Header() {
                 key={n.to}
                 to={n.to}
                 onClick={() => setMenuOpen(false)}
-                className={({ isActive }) => (isActive ? "text-ember" : "")}
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-ember focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                    : "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                }
               >
                 {n.label}
               </NavLink>

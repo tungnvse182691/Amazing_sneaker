@@ -32,14 +32,14 @@ export function Brand() {
       <main className="mx-auto max-w-7xl px-4 py-12 text-center md:px-6">
         <p className="font-display text-3xl uppercase">Không tìm thấy hãng giày</p>
         <p className="mt-2 text-ink-mute">
-          Hiện cửa hàng chỉ có 3 hãng: Nike, Adidas và Puma.
+          Hiện cửa hàng chỉ có 4 hãng: Nike, Adidas, Puma và Vans.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           {VALID_BRANDS.map((b) => (
             <Link
               key={b}
               to={`/brand/${b}`}
-              className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white hover:bg-ink-soft"
+              className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
             >
               {BRAND_LABELS[b]}
             </Link>
@@ -81,7 +81,7 @@ export function Brand() {
             <button
               type="button"
               onClick={() => refetch()}
-              className="mt-4 rounded-full bg-ink px-6 py-2 text-sm font-bold text-white hover:bg-ink-soft"
+              className="mt-4 rounded-full bg-ink px-6 py-3 text-sm font-bold text-white hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:py-2"
             >
               Thử lại
             </button>

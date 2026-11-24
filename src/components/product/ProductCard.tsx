@@ -83,7 +83,7 @@ export function ProductCard({ product }: { product: Product }) {
             toggleWishlist(product.id);
           }}
           aria-label={wished ? "Bỏ khỏi yêu thích" : "Thêm vào yêu thích"}
-          className={`absolute right-2 top-2 flex h-10 w-10 items-center justify-center rounded-full border ${
+          className={`absolute right-2 top-2 flex h-11 w-11 items-center justify-center rounded-full border focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:h-10 md:w-10 ${
             wished
               ? "border-ember bg-ember text-white"
               : "border-line bg-white text-ink hover:border-ember hover:text-ember"
@@ -103,7 +103,7 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
         <Link
           to={`/product/${product.slug}`}
-          className="font-bold leading-snug hover:underline"
+          className="font-bold leading-snug hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
         >
           {product.name}
         </Link>
@@ -120,7 +120,7 @@ export function ProductCard({ product }: { product: Product }) {
           type="button"
           onClick={handleQuickAdd}
           disabled={size === null}
-          className={`mt-2 flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-bold transition ${
+          className={`mt-2 flex items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-bold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:py-2 ${
             size === null
               ? "cursor-not-allowed bg-line text-ink-mute"
               : added

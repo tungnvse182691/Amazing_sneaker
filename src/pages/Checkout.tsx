@@ -115,13 +115,13 @@ export function Checkout() {
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <Link
             to={`/track?code=${encodeURIComponent(placedOrderCode)}`}
-            className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white hover:bg-ink-soft"
+            className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
           >
             Tra cứu đơn hàng
           </Link>
           <Link
             to="/shop"
-            className="rounded-full border border-ink px-6 py-3 text-sm font-bold hover:bg-ink hover:text-white"
+            className="rounded-full border border-ink px-6 py-3 text-sm font-bold hover:bg-ink hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
           >
             Tiếp tục mua sắm
           </Link>
@@ -149,7 +149,7 @@ export function Checkout() {
   }
 
   const inputCls =
-    "w-full rounded-xl border border-line bg-white px-4 py-3 outline-none focus:border-ink";
+    "w-full rounded-xl border border-line bg-white px-4 py-3 focus:border-ink";
   const errCls = "mt-1 text-sm font-bold text-ember";
 
   return (
@@ -235,7 +235,7 @@ export function Checkout() {
           <button
             type="submit"
             disabled={createOrder.isPending}
-            className="w-full rounded-full bg-ink px-6 py-3 font-bold text-white hover:bg-ink-soft disabled:opacity-50"
+            className="w-full rounded-full bg-ink px-6 py-3 font-bold text-white hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink disabled:opacity-50"
           >
             {createOrder.isPending ? "Đang đặt hàng…" : `Đặt hàng — ${formatVND(total)}`}
           </button>
@@ -249,7 +249,7 @@ export function Checkout() {
             {items.map((item) => (
               <li key={`${item.productId}-${item.size}`} className="flex items-center gap-3">
                 <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-[#EFEDE8] p-1">
-                  <img src={item.image} alt={item.name} className="max-h-full max-w-full object-contain" />
+                  <img src={item.image} alt={item.name} width={600} height={600} className="max-h-full max-w-full object-contain" />
                 </span>
                 <span className="min-w-0 flex-1 text-sm">
                   <span className="block truncate font-bold">{item.name}</span>
@@ -286,12 +286,12 @@ export function Checkout() {
                   onChange={(e) => setCode(e.target.value.toUpperCase())}
                   placeholder="Mã giảm giá (vd: CHAO10)"
                   aria-label="Mã giảm giá"
-                  className="min-w-0 flex-1 rounded-full border border-line px-4 py-2 text-sm outline-none focus:border-ink"
+                  className="min-w-0 flex-1 rounded-full border border-line px-4 py-3 text-sm focus:border-ink md:py-2"
                 />
                 <button
                   type="button"
                   onClick={applyVoucher}
-                  className="rounded-full border border-ink px-4 py-2 text-sm font-bold hover:bg-ink hover:text-white"
+                  className="rounded-full border border-ink px-4 py-3 text-sm font-bold hover:bg-ink hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:py-2"
                 >
                   Áp dụng
                 </button>

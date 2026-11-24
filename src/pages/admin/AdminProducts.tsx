@@ -14,7 +14,7 @@ import { ProductForm } from "../../components/admin/ProductForm";
 import type { Brand } from "../../types";
 
 const inputCls =
-  "rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none transition focus:border-ink focus:ring-2 focus:ring-volt/60";
+  "rounded-xl border border-line bg-white px-3 py-2 text-sm transition focus:border-ink focus:ring-2 focus:ring-volt/60";
 
 function AdminProductsInner() {
   const { data: products, isPending, isError, error, refetch } = useAdminProducts();
@@ -79,7 +79,7 @@ function AdminProductsInner() {
             setEditing(null);
             setCreating(true);
           }}
-          className="rounded-full bg-volt px-5 py-2 text-sm font-bold text-ink shadow-[0_1px_2px_rgba(0,0,0,0.06)] transition-all duration-200 hover:-translate-y-px hover:bg-volt-deep hover:shadow-[0_6px_16px_rgba(0,0,0,0.10)] active:translate-y-0 active:scale-[0.98]"
+          className="rounded-full bg-volt px-5 py-2 text-sm font-bold text-ink shadow-[0_1px_2px_rgba(0,0,0,0.06)] transition-[transform,background-color,box-shadow] duration-200 hover:-translate-y-px hover:bg-volt-deep hover:shadow-[0_6px_16px_rgba(0,0,0,0.10)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink active:translate-y-0 active:scale-[0.98]"
         >
           + Thêm sản phẩm
         </button>
@@ -139,13 +139,13 @@ function AdminProductsInner() {
           <table className="w-full min-w-[820px] text-left text-sm">
             <thead>
               <tr className="border-b border-line bg-paper text-xs font-semibold uppercase tracking-wide text-ink-mute">
-                <th className="px-4 py-3">Sản phẩm</th>
-                <th className="px-4 py-3">Hãng</th>
-                <th className="px-4 py-3">Giá</th>
-                <th className="px-4 py-3">Tồn kho</th>
-                <th className="px-4 py-3">Đã bán</th>
-                <th className="px-4 py-3">Trạng thái</th>
-                <th className="px-4 py-3 text-right">Thao tác</th>
+                <th className="sticky top-0 bg-paper px-4 py-3">Sản phẩm</th>
+                <th className="sticky top-0 bg-paper px-4 py-3">Hãng</th>
+                <th className="sticky top-0 bg-paper px-4 py-3">Giá</th>
+                <th className="sticky top-0 bg-paper px-4 py-3">Tồn kho</th>
+                <th className="sticky top-0 bg-paper px-4 py-3">Đã bán</th>
+                <th className="sticky top-0 bg-paper px-4 py-3">Trạng thái</th>
+                <th className="sticky top-0 bg-paper px-4 py-3 text-right">Thao tác</th>
               </tr>
             </thead>
             <tbody>
@@ -195,7 +195,7 @@ function AdminProductsInner() {
                         <button
                           type="button"
                           onClick={() => setEditing(p)}
-                          className="rounded-full border border-line px-3 py-1 text-xs font-semibold transition hover:border-ink/40 hover:bg-paper active:scale-95"
+                          className="rounded-full border border-line px-3 py-1 text-xs font-semibold transition hover:border-ink/40 hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink active:scale-95"
                         >
                           Sửa
                         </button>
@@ -203,14 +203,14 @@ function AdminProductsInner() {
                           type="button"
                           onClick={() => toggleHidden(p)}
                           disabled={updateMutation.isPending}
-                          className="rounded-full border border-line px-3 py-1 text-xs font-semibold transition hover:border-ink/40 hover:bg-paper active:scale-95 disabled:opacity-50"
+                          className="rounded-full border border-line px-3 py-1 text-xs font-semibold transition hover:border-ink/40 hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink active:scale-95 disabled:opacity-50"
                         >
                           {p.hidden ? "Hiện" : "Ẩn"}
                         </button>
                         <button
                           type="button"
                           onClick={() => setDeleting(p)}
-                          className="rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-100 active:scale-95"
+                          className="rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink active:scale-95"
                         >
                           Xóa
                         </button>

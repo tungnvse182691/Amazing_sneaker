@@ -44,7 +44,7 @@ export function ProductGridEmpty({
         <button
           type="button"
           onClick={onReset}
-          className="mt-4 rounded-full bg-ink px-6 py-2 text-sm font-bold text-white hover:bg-ink-soft"
+          className="mt-4 rounded-full bg-ink px-6 py-3 text-sm font-bold text-white hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:py-2"
         >
           Xóa bộ lọc
         </button>

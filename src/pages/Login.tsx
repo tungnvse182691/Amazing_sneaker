@@ -34,7 +34,7 @@ const loginSchema = z.object({
 type LoginValues = z.infer<typeof loginSchema>;
 
 const inputCls =
-  "w-full rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-ink";
+  "w-full rounded-xl border border-line bg-white px-3 py-2 text-sm focus:border-ink";
 
 export default function Login() {
   const user = useAuthStore((s) => s.user);
@@ -132,13 +132,13 @@ export default function Login() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full rounded-full bg-volt py-3 text-sm font-bold text-ink hover:bg-volt-deep disabled:opacity-50"
+            className="w-full rounded-full bg-volt py-3 text-sm font-bold text-ink hover:bg-volt-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink disabled:opacity-50"
           >
             {submitting ? "Đang đăng nhập…" : "Đăng nhập"}
           </button>
         </form>
 
-        <Link to="/" className="mt-6 inline-block text-sm font-semibold text-ink-mute hover:text-ink">
+        <Link to="/" className="mt-6 inline-block text-sm font-semibold text-ink-mute hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
           ← Về trang chủ
         </Link>
       </div>

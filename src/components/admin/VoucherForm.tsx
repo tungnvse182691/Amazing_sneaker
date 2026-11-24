@@ -26,7 +26,7 @@ const voucherSchema = z
 type VoucherFormValues = z.infer<typeof voucherSchema>;
 
 const inputCls =
-  "w-full rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-ink";
+  "w-full rounded-xl border border-line bg-white px-3 py-2 text-sm focus:border-ink";
 
 function toDateInput(iso: string): string {
   return iso.slice(0, 10);
@@ -181,14 +181,14 @@ export function VoucherForm({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full border border-line px-5 py-2 text-sm font-semibold hover:bg-paper"
+            className="rounded-full border border-line px-5 py-2 text-sm font-semibold hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
           >
             Hủy
           </button>
           <button
             type="submit"
             disabled={saving}
-            className="rounded-full bg-volt px-5 py-2 text-sm font-semibold text-ink hover:bg-volt-deep disabled:opacity-50"
+            className="rounded-full bg-volt px-5 py-2 text-sm font-semibold text-ink hover:bg-volt-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink disabled:opacity-50"
           >
             {saving ? "Đang lưu…" : initial ? "Lưu thay đổi" : "Thêm mã"}
           </button>

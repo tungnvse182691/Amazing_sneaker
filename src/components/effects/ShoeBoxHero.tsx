@@ -269,10 +269,15 @@ export default function ShoeBoxHero({ products }: ShoeBoxHeroProps) {
           onClick={() => scrollToStage(i)}
           aria-label={`Hộp ${i + 1}: ${p.name}`}
           aria-current={i === activeIndex ? "true" : undefined}
-          className={`h-2.5 rounded-full transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-volt ${
-            i === activeIndex ? "w-8 bg-volt" : "w-2.5 bg-paper/40 hover:bg-paper/70"
-          }`}
-        />
+          className="flex h-11 w-11 items-center justify-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-volt"
+        >
+          <span
+            aria-hidden="true"
+            className={`block h-2.5 rounded-full transition-[width,background-color] duration-300 ${
+              i === activeIndex ? "w-8 bg-volt" : "w-2.5 bg-paper/40 hover:bg-paper/70"
+            }`}
+          />
+        </button>
       ))}
     </>
   );
@@ -365,7 +370,7 @@ export default function ShoeBoxHero({ products }: ShoeBoxHeroProps) {
                       to={`/product/${product.slug}`}
                       className="rounded-full bg-volt px-6 py-3 text-sm font-bold text-ink transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-volt"
                     >
-                      Mua ngay — {product.name}
+                      Mua ngay: {product.name}
                     </Link>
                     <Link
                       to="/shop"
@@ -415,7 +420,7 @@ export default function ShoeBoxHero({ products }: ShoeBoxHeroProps) {
                       <div className="aspect-[4/3] w-full overflow-hidden">
                         <img
                           src={image}
-                          alt={`${product.name} — màu ${colorName}`}
+                          alt={`${product.name}, màu ${colorName}`}
                           width={900}
                           height={600}
                           fetchPriority={i === 0 ? "high" : "auto"}
@@ -473,7 +478,7 @@ export default function ShoeBoxHero({ products }: ShoeBoxHeroProps) {
                     data-testid="shoebox-caption"
                     className="relative z-10 mt-8 pb-1 text-center text-sm leading-6 font-semibold text-paper/70"
                   >
-                    {product.name} — {colorName}
+                    {product.name} · {colorName}
                   </p>
                 </div>
               </div>
@@ -494,7 +499,7 @@ export default function ShoeBoxHero({ products }: ShoeBoxHeroProps) {
             type="button"
             onClick={goPrev}
             aria-label="Hộp trước"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-paper/40 text-paper transition hover:border-volt hover:text-volt focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-volt"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-paper/40 text-paper transition hover:border-volt hover:text-volt focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-volt"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
@@ -503,7 +508,7 @@ export default function ShoeBoxHero({ products }: ShoeBoxHeroProps) {
             type="button"
             onClick={goNext}
             aria-label="Hộp sau"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-paper/40 text-paper transition hover:border-volt hover:text-volt focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-volt"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-paper/40 text-paper transition hover:border-volt hover:text-volt focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-volt"
           >
             <ChevronRight className="h-5 w-5" />
           </button>
@@ -522,7 +527,7 @@ export default function ShoeBoxHero({ products }: ShoeBoxHeroProps) {
           className="absolute bottom-5 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-1 text-xs font-bold tracking-widest text-paper/70 uppercase transition hover:text-volt md:flex"
         >
           Cuộn để mở từng hộp
-          <ChevronDown className="h-5 w-5 animate-bounce" />
+          <ChevronDown className="h-5 w-5 animate-hint-bob" />
         </button>
       ) : null}
     </section>

@@ -35,7 +35,7 @@ export function Wishlist() {
           <button
             type="button"
             onClick={() => refetch()}
-            className="mt-4 rounded-full bg-ink px-6 py-2 text-sm font-bold text-white hover:bg-ink-soft"
+            className="mt-4 rounded-full bg-ink px-6 py-3 text-sm font-bold text-white hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:py-2"
           >
             Thử lại
           </button>
@@ -49,7 +49,7 @@ export function Wishlist() {
           <div className="mt-6 text-center">
             <Link
               to="/shop"
-              className="inline-block rounded-full bg-ink px-6 py-3 text-sm font-bold text-white hover:bg-ink-soft"
+              className="inline-block rounded-full bg-ink px-6 py-3 text-sm font-bold text-white hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
             >
               Khám phá giày ngay
             </Link>
@@ -81,7 +81,7 @@ export function Wishlist() {
                     <span className="text-xs font-bold uppercase tracking-wide text-ink-mute">
                       {BRAND_LABELS[p.brand]}
                     </span>
-                    <Link to={`/product/${p.slug}`} className="font-bold leading-snug hover:underline">
+                    <Link to={`/product/${p.slug}`} className="font-bold leading-snug hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
                       {p.name}
                     </Link>
                     <p className="text-lg font-extrabold">{formatVND(p.price)}</p>
@@ -105,7 +105,7 @@ export function Wishlist() {
                             1,
                           )
                         }
-                        className="flex flex-1 items-center justify-center gap-1 rounded-full bg-ink px-3 py-2 text-sm font-bold text-white hover:bg-ink-soft disabled:cursor-not-allowed disabled:bg-line disabled:text-ink-mute"
+                        className="flex flex-1 items-center justify-center gap-1 rounded-full bg-ink px-3 py-3 text-sm font-bold text-white hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink disabled:cursor-not-allowed disabled:bg-line disabled:text-ink-mute md:py-2"
                       >
                         <ShoppingBag className="h-4 w-4" />
                         {size ? `Thêm size ${size.size}` : "Hết hàng"}
@@ -114,7 +114,7 @@ export function Wishlist() {
                         type="button"
                         onClick={() => toggle(p.id)}
                         aria-label={`Bỏ ${p.name} khỏi yêu thích`}
-                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-ember bg-ember text-white"
+                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-ember bg-ember text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:h-9 md:w-9"
                       >
                         <Heart className="h-4 w-4" fill="currentColor" />
                       </button>

@@ -32,7 +32,7 @@ function VoucherCard({ code, desc }: { code: string; desc: string }) {
       <button
         type="button"
         onClick={copy}
-        className="flex shrink-0 items-center gap-2 rounded-full bg-ink px-4 py-2 text-sm font-bold text-white hover:bg-ink-soft"
+        className="flex shrink-0 items-center gap-2 rounded-full bg-ink px-4 py-3 text-sm font-bold text-white hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:py-2"
       >
         {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
         {copied ? "Đã sao chép" : "Sao chép"}
@@ -51,7 +51,7 @@ function SectionHead({ title, sub, to }: { title: string; sub: string; to?: stri
       {to && (
         <Link
           to={to}
-          className="flex shrink-0 items-center gap-1 text-sm font-bold hover:text-ember"
+          className="flex shrink-0 items-center gap-1 text-sm font-bold hover:text-ember focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
         >
           Xem tất cả <ArrowRight className="h-4 w-4" />
         </Link>
@@ -104,7 +104,7 @@ export function Home() {
               <button
                 type="button"
                 onClick={() => refetch()}
-                className="mt-3 rounded-full bg-ink px-6 py-2 text-sm font-bold text-white"
+                className="mt-3 rounded-full bg-ink px-6 py-3 text-sm font-bold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:py-2"
               >
                 Thử lại
               </button>
@@ -124,7 +124,7 @@ export function Home() {
               <Link
                 key={brand}
                 to={`/brand/${brand}`}
-                className="group overflow-hidden rounded-2xl border border-line bg-white transition hover:-translate-y-1 hover:border-ink hover:shadow-[6px_6px_0_#111111]"
+                className="group overflow-hidden rounded-2xl border border-line bg-white transition hover:-translate-y-1 hover:border-ink hover:shadow-[6px_6px_0_#111111] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
               >
                 <div className="flex aspect-[4/3] items-center justify-center bg-[#EFEDE8] p-6">
                   <img
@@ -159,7 +159,7 @@ export function Home() {
               <button
                 type="button"
                 onClick={() => refetch()}
-                className="mt-3 rounded-full bg-ink px-6 py-2 text-sm font-bold text-white"
+                className="mt-3 rounded-full bg-ink px-6 py-3 text-sm font-bold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:py-2"
               >
                 Thử lại
               </button>
@@ -206,6 +206,16 @@ export function Home() {
 
       {/* Dải giày chạy cuối trang — 12 đôi thật, 2 hàng ngược chiều */}
       <ShoeMarquee />
+
+      {/* CTA cuối trang — sau dải giày chạy */}
+      <div className="mx-auto max-w-7xl px-4 py-10 text-center md:px-6">
+        <Link
+          to="/shop"
+          className="inline-flex items-center gap-2 rounded-full bg-volt px-8 py-3 text-sm font-bold text-ink transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+        >
+          Xem tất cả giày <ArrowRight className="h-4 w-4" />
+        </Link>
+      </div>
     </main>
   );
 }

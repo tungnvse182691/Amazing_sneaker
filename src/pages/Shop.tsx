@@ -96,19 +96,19 @@ export function Shop() {
             onChange={(e) => setSearchInput(e.target.value)}
             placeholder="Tìm tên giày, hãng, dòng giày…"
             aria-label="Tìm kiếm giày"
-            className="w-full rounded-full border border-line bg-white py-3 pl-9 pr-3 outline-none focus:border-ink"
+            className="w-full rounded-full border border-line bg-white py-3 pl-9 pr-3 focus:border-ink"
           />
         </label>
         <button
           type="submit"
-          className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white hover:bg-ink-soft"
+          className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
         >
           Tìm
         </button>
         <button
           type="button"
           onClick={() => setShowFilters((v) => !v)}
-          className="flex items-center gap-2 rounded-full border border-ink px-4 py-3 text-sm font-bold lg:hidden"
+          className="flex items-center gap-2 rounded-full border border-ink px-4 py-3 text-sm font-bold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink lg:hidden"
           aria-expanded={showFilters}
         >
           <SlidersHorizontal className="h-4 w-4" /> Lọc
@@ -140,7 +140,7 @@ export function Shop() {
                 value={sort}
                 onChange={(e) => changeSort(e.target.value)}
                 aria-label="Sắp xếp sản phẩm"
-                className="rounded-full border border-line bg-white px-3 py-2 text-sm font-normal outline-none focus:border-ink"
+                className="rounded-full border border-line bg-white px-3 py-3 text-sm font-normal focus:border-ink md:py-2"
               >
                 {SORT_OPTIONS.map((o) => (
                   <option key={o.value} value={o.value}>
@@ -160,7 +160,7 @@ export function Shop() {
               <button
                 type="button"
                 onClick={() => refetch()}
-                className="mt-4 rounded-full bg-ink px-6 py-2 text-sm font-bold text-white hover:bg-ink-soft"
+                className="mt-4 rounded-full bg-ink px-6 py-3 text-sm font-bold text-white hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:py-2"
               >
                 Thử lại
               </button>

@@ -59,7 +59,7 @@ function AdminVouchersInner() {
             setEditing(null);
             setCreating(true);
           }}
-          className="rounded-full bg-volt px-5 py-2 text-sm font-bold text-ink shadow-[0_1px_2px_rgba(0,0,0,0.06)] transition-all duration-200 hover:-translate-y-px hover:bg-volt-deep hover:shadow-[0_6px_16px_rgba(0,0,0,0.10)] active:translate-y-0 active:scale-[0.98]"
+          className="rounded-full bg-volt px-5 py-2 text-sm font-bold text-ink shadow-[0_1px_2px_rgba(0,0,0,0.06)] transition-[transform,background-color,box-shadow] duration-200 hover:-translate-y-px hover:bg-volt-deep hover:shadow-[0_6px_16px_rgba(0,0,0,0.10)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink active:translate-y-0 active:scale-[0.98]"
         >
           + Thêm mã giảm giá
         </button>
@@ -96,12 +96,12 @@ function AdminVouchersInner() {
           <table className="w-full min-w-[820px] text-left text-sm">
             <thead>
               <tr className="border-b border-line bg-paper text-xs font-semibold uppercase tracking-wide text-ink-mute">
-                <th className="px-4 py-3">Mã</th>
-                <th className="px-4 py-3">Giảm</th>
-                <th className="px-4 py-3">Đơn tối thiểu</th>
-                <th className="px-4 py-3">Hạn dùng</th>
-                <th className="px-4 py-3">Trạng thái</th>
-                <th className="px-4 py-3 text-right">Thao tác</th>
+                <th className="sticky top-0 bg-paper px-4 py-3">Mã</th>
+                <th className="sticky top-0 bg-paper px-4 py-3">Giảm</th>
+                <th className="sticky top-0 bg-paper px-4 py-3">Đơn tối thiểu</th>
+                <th className="sticky top-0 bg-paper px-4 py-3">Hạn dùng</th>
+                <th className="sticky top-0 bg-paper px-4 py-3">Trạng thái</th>
+                <th className="sticky top-0 bg-paper px-4 py-3 text-right">Thao tác</th>
               </tr>
             </thead>
             <tbody>
@@ -145,7 +145,7 @@ function AdminVouchersInner() {
                         <button
                           type="button"
                           onClick={() => setEditing(v)}
-                          className="rounded-full border border-line px-3 py-1 text-xs font-semibold transition hover:border-ink/40 hover:bg-paper active:scale-95"
+                          className="rounded-full border border-line px-3 py-1 text-xs font-semibold transition hover:border-ink/40 hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink active:scale-95"
                         >
                           Sửa
                         </button>
@@ -153,14 +153,14 @@ function AdminVouchersInner() {
                           type="button"
                           onClick={() => toggleActive(v)}
                           disabled={updateMutation.isPending}
-                          className="rounded-full border border-line px-3 py-1 text-xs font-semibold transition hover:border-ink/40 hover:bg-paper active:scale-95 disabled:opacity-50"
+                          className="rounded-full border border-line px-3 py-1 text-xs font-semibold transition hover:border-ink/40 hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink active:scale-95 disabled:opacity-50"
                         >
                           {v.active ? "Tắt" : "Bật"}
                         </button>
                         <button
                           type="button"
                           onClick={() => setDeleting(v)}
-                          className="rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-100 active:scale-95"
+                          className="rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink active:scale-95"
                         >
                           Xóa
                         </button>
